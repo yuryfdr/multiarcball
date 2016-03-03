@@ -7,7 +7,7 @@ if USE_GTK
 
 lib_LTLIBRARIES = libgtkmmarcball.la
 
-libgtkmmarcball_la_CXXFLAGS =  @GTKGLEXTMM_CFLAGS@ @PANGOFT2_CFLAGS@
+libgtkmmarcball_la_CXXFLAGS =  @GTKGLEXTMM_CFLAGS@ @PANGOFT2_CFLAGS@ @CXX11REQ@
 
 libgtkmmarcball_la_SOURCES = gtkmm_arcball.cpp
 

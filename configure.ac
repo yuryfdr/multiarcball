@@ -2,9 +2,9 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT(multiarcball,0.2.5,[yfdrnchk at mail dot ru])
-AM_INIT_AUTOMAKE(multiarcball,0.2.5)
+AC_INIT([multiarcball],0.2.6,[yfdrnchk at mail dot ru])
 AC_CONFIG_SRCDIR([src/FLui/FlGlArcballWindow.h])
+AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([config.h])
 
 # from libtool info
@@ -138,6 +138,7 @@ AM_CONDITIONAL([USE_FLTK2],[test "x$HAVE_FLTK2" == x1])
 AC_ARG_ENABLE(gtk,[  --enable-gtk   build gtkmm GUI part [default=yes] ])
 
 HAVE_GTKMM=0
+CXX11REQ=""
     
 if test "x$enable_gtk" != xno; then    
     AC_ARG_WITH(pkg-config-path, 
@@ -154,7 +155,11 @@ if test "x$enable_gtk" != xno; then
       [HAVE_PANGOFT2=1],
       [AC_MSG_WARN("can not find pangoft2")]
     )
-    
+    PKG_CHECK_MODULES(SIGC, [sigc++-2.0 >= 2.6],
+	[CXX11REQ="-std=c++11"
+	AC_SUBST(CXX11REQ)],
+	[ PKG_CHECK_MODULES(SIGC, [sigc++-2.0 >= 2.4]) ]
+    )
 #    PKG_CHECK_MODULES(GLADE, [libglademm-2.4 >= 2.4],
 #    [],[AC_MSG_ERROR("can not find glademmlib")])
 #    PKG_CHECK_MODULES(GTHREAD, [gthread-2.0 ],

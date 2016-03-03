@@ -43,7 +43,7 @@ if USE_GTK
 
 testmm = testgtkmm
 
-testgtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I../src/gtkmmui
+testgtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I../src/gtkmmui @CXX11REQ@
 
 testgtkmm_SOURCES = testGtkmm.cxx
 
@@ -53,7 +53,7 @@ testgtkmm_LDADD =
 
 exmm = examplegtkmm
 
-examplegtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I../src/gtkmmui
+examplegtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I../src/gtkmmui @CXX11REQ@
 
 examplegtkmm_SOURCES = exampleGtkmm.cxx
 
