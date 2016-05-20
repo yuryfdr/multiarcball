@@ -25,7 +25,6 @@
 #include <FL/x.H>
 #include <FL/fl_draw.H>
 
-#include "../flcursors/fltk1/Fl_Custom_Cursor.H"
 
 #include "../data/move.xpm"
 #include "../data/rot.xpm"
@@ -35,12 +34,15 @@
 #include "../data/zoom.xpm"
 #include "../data/zoom_w.xpm"
 
+#ifdef USE_OLDCURSORS
+
+#include "../flcursors/fltk1/Fl_Custom_Cursor.H"
+
 namespace{
   Fl_Custom_Cursor cur_move(move_xpm,15,15),cur_rotate(rot_xpm,15,15),cur_rotate_x(rot_x_xpm,15,15),cur_rotate_y(rot_y_xpm,15,15),
   cur_rotate_z(rot_z_xpm,15,15),
   cur_zoom(zoom_xpm,0,0),cur_zoom_w(zoom_w_xpm,0,0);
 };
-
 void FlGlArcballWindow::cursor(const Cursors3D cur){
   switch(cur){
     case CursorMove:
@@ -69,6 +71,59 @@ void FlGlArcballWindow::cursor(const Cursors3D cur){
       Fl_Gl_Window::cursor(FL_CURSOR_ARROW);
   }
 };
+#else
+
+namespace {
+  Fl_Pixmap* cr_move=(Fl_Pixmap*)0,*cr_rotate,*cr_rotate_x,*cr_rotate_y,*cr_rotate_z,*cr_zoom,*cr_zoom_w;
+  Fl_RGB_Image* cur_move,*cur_rotate,*cur_rotate_x,*cur_rotate_y,*cur_rotate_z,*cur_zoom,*cur_zoom_w;
+};
+
+void FlGlArcballWindow::cursor(const Cursors3D cur){
+  if(!cur_move){
+   cr_move=new Fl_Pixmap(move_xpm);//,15,15);
+   cr_rotate=new Fl_Pixmap(rot_xpm);//,15,15);
+   cr_rotate_x=new Fl_Pixmap(rot_x_xpm);//,15,15);
+   cr_rotate_y=new Fl_Pixmap(rot_y_xpm);//,15,15);
+   cr_rotate_z=new Fl_Pixmap(rot_z_xpm);//,15,15);
+   cr_zoom=new Fl_Pixmap(zoom_xpm);//,0,0);
+   cr_zoom_w=new Fl_Pixmap(zoom_w_xpm);//,0,0);
+   cur_move=new Fl_RGB_Image(cr_move);
+   cur_rotate=new Fl_RGB_Image(cr_rotate);
+   cur_rotate_x=new Fl_RGB_Image(cr_rotate_x);
+   cur_rotate_y=new Fl_RGB_Image(cr_rotate_y);
+   cur_rotate_z=new Fl_RGB_Image(cr_rotate_z);
+   cur_zoom=new Fl_RGB_Image(cr_zoom);
+   cur_zoom_w=new Fl_RGB_Image(cr_zoom_w);
+  }
+  switch(cur){
+    case CursorMove:
+      Fl_Gl_Window::cursor(cur_move,15,15);
+      break;
+    case CursorZoom:
+      Fl_Gl_Window::cursor(cur_zoom,0,0);
+      break;
+    case CursorZoomW:
+      Fl_Gl_Window::cursor(cur_zoom_w,0,0);
+      break;
+    case CursorRotateX:
+      Fl_Gl_Window::cursor(cur_rotate_x,15,15);
+      break;
+    case CursorRotateY:
+      Fl_Gl_Window::cursor(cur_rotate_y,15,15);
+      break;
+    case CursorRotateZ:
+      Fl_Gl_Window::cursor(cur_rotate_z,15,15);
+      break;
+    case CursorRotate:
+      Fl_Gl_Window::cursor(cur_rotate,15,15);
+      break;
+    case CursorDefault:
+    default:
+      Fl_Gl_Window::cursor(FL_CURSOR_ARROW);
+  }
+};
+#endif
+
 
 using namespace mvct;
 void FlGlArcballWindow::draw_overlay ()

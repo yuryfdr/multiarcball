@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([multiarcball],0.2.6,[yfdrnchk at mail dot ru])
+AC_INIT([multiarcball],0.2.7,[yfdrnchk at mail dot ru])
 AC_CONFIG_SRCDIR([src/FLui/FlGlArcballWindow.h])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([config.h])
@@ -76,6 +76,8 @@ esac
 AC_SUBST(LTNOUNDEF)
 AC_SUBST(LIB_OPENGL_32)
 
+NEWCURSORS=""
+
 #fltk
 AC_ARG_ENABLE(fltk,[  --enable-fltk   build fltk-1.x.x GUI part [default=yes] ])
     if test "x$enable_fltk" != xno; then
@@ -85,7 +87,12 @@ AC_ARG_ENABLE(fltk,[  --enable-fltk   build fltk-1.x.x GUI part [default=yes] ])
       HAVE_FLTK=1
       AC_SUBST([FL_CXXFLAGS],["`$FLTK --cxxflags` $CXXFLAGS"])
       AC_SUBST([FL_LDFLAGS],["`$FLTK --use-gl --ldflags` $LDFLAGS"])
-      
+      AC_SUBST([FL_VER],["`$FLTK --version`"])
+      FL_MINOR=`expr "$FL_VER" : '..\(.\)'`
+      FL_PATCH=`expr "$FL_VER" : '....\(.\)'`
+      if test ${FL_MINOR} -ge 3 -a ${FL_PATCH} -ge 3 ;then 
+        NEWCURSORS=1
+      fi
       SLIBS=$LIBS
     case "$host" in
       *-*-mingw* | *-*-cygwin*)
@@ -93,6 +100,7 @@ AC_ARG_ENABLE(fltk,[  --enable-fltk   build fltk-1.x.x GUI part [default=yes] ])
       AC_SUBST([FL_LDFLAGS],[" -lfltk_gl -lfltk -lgdi32"])
       ;;
       *)
+	if test x"$NEWCURSORS" != x1 ; then
         AC_CHECK_HEADER(
 	  X11/Xcursor/Xcursor.h,
 	  AC_CHECK_LIB(Xcursor, XcursorImageLoadCursor,
@@ -100,6 +108,7 @@ AC_ARG_ENABLE(fltk,[  --enable-fltk   build fltk-1.x.x GUI part [default=yes] ])
 	  LIB_XCURSOR="-lXcursor",
 	  AC_MSG_ERROR("XCursor library not found"))
 	)
+	fi
       AC_SUBST([FL_LDFLAGS],["`$FLTK --use-gl --ldflags` $LDFLAGS"])
 	;;
       esac
@@ -114,6 +123,8 @@ AC_ARG_ENABLE(fltk,[  --enable-fltk   build fltk-1.x.x GUI part [default=yes] ])
     fi
 
 AC_SUBST(HAVE_FLTK)
+
+AM_CONDITIONAL([USE_OLDCURSORS],[test "x$NEWCURSORS" != x1])
 
 AM_CONDITIONAL([USE_FLTK],[test "x$HAVE_FLTK" == x1])
 
@@ -169,10 +180,6 @@ if test "x$enable_gtk" != xno; then
 fi
 
 AM_CONDITIONAL([USE_GTK],[test "x$HAVE_GTKMM" == x1])
-
-# Check for the XCursor library if needed
-
-# Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

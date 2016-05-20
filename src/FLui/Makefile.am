@@ -1,15 +1,18 @@
 
-INCLUDES = -I../math
-
-AM_CXXFLAGS =
+AM_CPPFLAGS = -I../math
 
 if USE_FLTK 
 
+if USE_OLDCURSORS
+CURSSRC = ../flcursors/fltk1/Fl_Custom_Cursor.cxx
+CURDEF = -DUSE_OLDCURSORS
+endif
+
 lib_LTLIBRARIES = libFLarcball.la
 
-libFLarcball_la_CXXFLAGS =  @FL_CXXFLAGS@
+libFLarcball_la_CXXFLAGS =  @FL_CXXFLAGS@ $(CURDEF)
 
-libFLarcball_la_SOURCES = FlGlArcballWindow.cpp ../flcursors/fltk1/Fl_Custom_Cursor.cxx
+libFLarcball_la_SOURCES = FlGlArcballWindow.cpp $(CURSSRC)
 
 libFLarcball_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @FL_LDFLAGS@ -version-info @MA_LT_VERSION@ 
 

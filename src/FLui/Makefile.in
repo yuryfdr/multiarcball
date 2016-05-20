@@ -134,9 +134,10 @@ LTLIBRARIES = $(lib_LTLIBRARIES)
 @USE_FLTK_TRUE@libFLarcball_la_DEPENDENCIES = ../math/lib3dmath.la
 am__libFLarcball_la_SOURCES_DIST = FlGlArcballWindow.cpp \
 	../flcursors/fltk1/Fl_Custom_Cursor.cxx
+@USE_FLTK_TRUE@@USE_OLDCURSORS_TRUE@am__objects_1 = libFLarcball_la-Fl_Custom_Cursor.lo
 @USE_FLTK_TRUE@am_libFLarcball_la_OBJECTS =  \
 @USE_FLTK_TRUE@	libFLarcball_la-FlGlArcballWindow.lo \
-@USE_FLTK_TRUE@	libFLarcball_la-Fl_Custom_Cursor.lo
+@USE_FLTK_TRUE@	$(am__objects_1)
 libFLarcball_la_OBJECTS = $(am_libFLarcball_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -248,6 +249,7 @@ FLTK = @FLTK@
 FLTK2 = @FLTK2@
 FL_CXXFLAGS = @FL_CXXFLAGS@
 FL_LDFLAGS = @FL_LDFLAGS@
+FL_VER = @FL_VER@
 GREP = @GREP@
 GTKGLEXTMM_CFLAGS = @GTKGLEXTMM_CFLAGS@
 GTKGLEXTMM_LIBS = @GTKGLEXTMM_LIBS@
@@ -356,11 +358,12 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-INCLUDES = -I../math
-AM_CXXFLAGS = 
+AM_CPPFLAGS = -I../math
+@USE_FLTK_TRUE@@USE_OLDCURSORS_TRUE@CURSSRC = ../flcursors/fltk1/Fl_Custom_Cursor.cxx
+@USE_FLTK_TRUE@@USE_OLDCURSORS_TRUE@CURDEF = -DUSE_OLDCURSORS
 @USE_FLTK_TRUE@lib_LTLIBRARIES = libFLarcball.la
-@USE_FLTK_TRUE@libFLarcball_la_CXXFLAGS = @FL_CXXFLAGS@
-@USE_FLTK_TRUE@libFLarcball_la_SOURCES = FlGlArcballWindow.cpp ../flcursors/fltk1/Fl_Custom_Cursor.cxx
+@USE_FLTK_TRUE@libFLarcball_la_CXXFLAGS = @FL_CXXFLAGS@ $(CURDEF)
+@USE_FLTK_TRUE@libFLarcball_la_SOURCES = FlGlArcballWindow.cpp $(CURSSRC)
 @USE_FLTK_TRUE@libFLarcball_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @FL_LDFLAGS@ -version-info @MA_LT_VERSION@ 
 @USE_FLTK_TRUE@libFLarcball_la_LIBADD = ../math/lib3dmath.la 
 @USE_FLTK_TRUE@libFLarcball_la_HEADERS = FlGlArcballWindow.h
