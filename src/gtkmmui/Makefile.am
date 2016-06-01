@@ -1,7 +1,5 @@
 
-INCLUDES = -I../math
-
-AM_CXXFLAGS =
+AM_CPPFLAGS = -I../math
 
 if USE_GTK
 

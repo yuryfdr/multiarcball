@@ -1,7 +1,5 @@
 
-INCLUDES = -I../src/math
-
-AM_CXXFLAGS =
+AM_CPPFLAGS = -I../src/math
 
 if USE_FLTK 
 
@@ -72,9 +70,24 @@ testmath_SOURCES = testmath.cpp
 testmath_LDFLAGS = 
 
 testmath_LDADD = 
+
+
+if USE_QT
+testqt = testQt
+
+testQt_CXXFLAGS =  @QT_CFLAGS@ -I../src/qt 
+
+testQt_SOURCES = testQt.cpp
+
+testQt_LDFLAGS = ../src/qt/libQarcball.la 
+
+testQt_LDADD =
+
+
+endif
  
 
-noinst_PROGRAMS= ${testmath} ${testfl} ${testfl1ex} ${testfltk} ${testmm} ${exmm} 
+noinst_PROGRAMS= ${testmath} ${testfl} ${testfl1ex} ${testfltk} ${testmm} ${exmm} ${testqt}
 
 noinst_HEADERS= draw_cube.h
 

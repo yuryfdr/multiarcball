@@ -89,13 +89,12 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = src/FLui
+subdir = src/qt
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
-DIST_COMMON = $(srcdir)/Makefile.am \
-	$(am__libFLarcball_la_HEADERS_DIST) $(am__noinst_HEADERS_DIST) \
+DIST_COMMON = $(srcdir)/Makefile.am $(am__libQarcball_la_HEADERS_DIST) \
 	$(am__DIST_COMMON)
 mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
@@ -129,25 +128,24 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(libdir)" \
-	"$(DESTDIR)$(libFLarcball_ladir)"
+	"$(DESTDIR)$(libQarcball_ladir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
-@USE_FLTK_TRUE@libFLarcball_la_DEPENDENCIES = ../math/lib3dmath.la
-am__libFLarcball_la_SOURCES_DIST = FlGlArcballWindow.cpp \
-	../flcursors/fltk1/Fl_Custom_Cursor.cxx
-@USE_FLTK_TRUE@@USE_OLDCURSORS_TRUE@am__objects_1 = libFLarcball_la-Fl_Custom_Cursor.lo
-@USE_FLTK_TRUE@am_libFLarcball_la_OBJECTS =  \
-@USE_FLTK_TRUE@	libFLarcball_la-FlGlArcballWindow.lo \
-@USE_FLTK_TRUE@	$(am__objects_1)
-libFLarcball_la_OBJECTS = $(am_libFLarcball_la_OBJECTS)
+@USE_QT_TRUE@libQarcball_la_DEPENDENCIES = ../math/lib3dmath.la
+am__libQarcball_la_SOURCES_DIST = moc_QArcballWidget.cpp \
+	QArcballWidget.cpp
+@USE_QT_TRUE@am_libQarcball_la_OBJECTS =  \
+@USE_QT_TRUE@	libQarcball_la-moc_QArcballWidget.lo \
+@USE_QT_TRUE@	libQarcball_la-QArcballWidget.lo
+libQarcball_la_OBJECTS = $(am_libQarcball_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libFLarcball_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
+libQarcball_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(libFLarcball_la_CXXFLAGS) $(CXXFLAGS) \
-	$(libFLarcball_la_LDFLAGS) $(LDFLAGS) -o $@
-@USE_FLTK_TRUE@am_libFLarcball_la_rpath = -rpath $(libdir)
+	$(libQarcball_la_CXXFLAGS) $(CXXFLAGS) \
+	$(libQarcball_la_LDFLAGS) $(LDFLAGS) -o $@
+@USE_QT_TRUE@am_libQarcball_la_rpath = -rpath $(libdir)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -182,16 +180,15 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(libFLarcball_la_SOURCES)
-DIST_SOURCES = $(am__libFLarcball_la_SOURCES_DIST)
+SOURCES = $(libQarcball_la_SOURCES)
+DIST_SOURCES = $(am__libQarcball_la_SOURCES_DIST)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-am__libFLarcball_la_HEADERS_DIST = FlGlArcballWindow.h
-am__noinst_HEADERS_DIST = ../flcursors/fltk1/Fl_Custom_Cursor.H
-HEADERS = $(libFLarcball_la_HEADERS) $(noinst_HEADERS)
+am__libQarcball_la_HEADERS_DIST = QArcballWidget.h
+HEADERS = $(libQarcball_la_HEADERS)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -365,22 +362,19 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I../math
-@USE_FLTK_TRUE@@USE_OLDCURSORS_TRUE@CURSSRC = ../flcursors/fltk1/Fl_Custom_Cursor.cxx
-@USE_FLTK_TRUE@@USE_OLDCURSORS_TRUE@CURDEF = -DUSE_OLDCURSORS
-@USE_FLTK_TRUE@lib_LTLIBRARIES = libFLarcball.la
-@USE_FLTK_TRUE@libFLarcball_la_CXXFLAGS = @FL_CXXFLAGS@ $(CURDEF)
-@USE_FLTK_TRUE@libFLarcball_la_SOURCES = FlGlArcballWindow.cpp $(CURSSRC)
-@USE_FLTK_TRUE@libFLarcball_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @FL_LDFLAGS@ -version-info @MA_LT_VERSION@ 
-@USE_FLTK_TRUE@libFLarcball_la_LIBADD = ../math/lib3dmath.la 
-@USE_FLTK_TRUE@libFLarcball_la_HEADERS = FlGlArcballWindow.h
-@USE_FLTK_TRUE@libFLarcball_ladir = \
-@USE_FLTK_TRUE@	$(pkgincludedir)/FL
+@USE_QT_TRUE@lib_LTLIBRARIES = libQarcball.la
+@USE_QT_TRUE@libQarcball_la_CXXFLAGS = @QT_CFLAGS@ 
+@USE_QT_TRUE@libQarcball_la_SOURCES = moc_QArcballWidget.cpp QArcballWidget.cpp 
+@USE_QT_TRUE@libQarcball_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @QT_LIBS@ -version-info @MA_LT_VERSION@ 
+@USE_QT_TRUE@libQarcball_la_LIBADD = ../math/lib3dmath.la 
+@USE_QT_TRUE@libQarcball_la_HEADERS = QArcballWidget.h
+@USE_QT_TRUE@libQarcball_ladir = \
+@USE_QT_TRUE@	$(pkgincludedir)/Qt
 
-@USE_FLTK_TRUE@noinst_HEADERS = ../flcursors/fltk1/Fl_Custom_Cursor.H
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cpp .cxx .lo .o .obj
+.SUFFIXES: .cpp .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -390,9 +384,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/FLui/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu src/qt/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu src/FLui/Makefile
+	  $(AUTOMAKE) --gnu src/qt/Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
 	  *config.status*) \
@@ -446,8 +440,8 @@ clean-libLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-libFLarcball.la: $(libFLarcball_la_OBJECTS) $(libFLarcball_la_DEPENDENCIES) $(EXTRA_libFLarcball_la_DEPENDENCIES) 
-	$(AM_V_CXXLD)$(libFLarcball_la_LINK) $(am_libFLarcball_la_rpath) $(libFLarcball_la_OBJECTS) $(libFLarcball_la_LIBADD) $(LIBS)
+libQarcball.la: $(libQarcball_la_OBJECTS) $(libQarcball_la_DEPENDENCIES) $(EXTRA_libQarcball_la_DEPENDENCIES) 
+	$(AM_V_CXXLD)$(libQarcball_la_LINK) $(am_libQarcball_la_rpath) $(libQarcball_la_OBJECTS) $(libQarcball_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -455,8 +449,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libFLarcball_la-FlGlArcballWindow.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libFLarcball_la-Fl_Custom_Cursor.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libQarcball_la-QArcballWidget.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libQarcball_la-moc_QArcballWidget.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -479,67 +473,46 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-libFLarcball_la-FlGlArcballWindow.lo: FlGlArcballWindow.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libFLarcball_la_CXXFLAGS) $(CXXFLAGS) -MT libFLarcball_la-FlGlArcballWindow.lo -MD -MP -MF $(DEPDIR)/libFLarcball_la-FlGlArcballWindow.Tpo -c -o libFLarcball_la-FlGlArcballWindow.lo `test -f 'FlGlArcballWindow.cpp' || echo '$(srcdir)/'`FlGlArcballWindow.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libFLarcball_la-FlGlArcballWindow.Tpo $(DEPDIR)/libFLarcball_la-FlGlArcballWindow.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='FlGlArcballWindow.cpp' object='libFLarcball_la-FlGlArcballWindow.lo' libtool=yes @AMDEPBACKSLASH@
+libQarcball_la-moc_QArcballWidget.lo: moc_QArcballWidget.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball_la-moc_QArcballWidget.lo -MD -MP -MF $(DEPDIR)/libQarcball_la-moc_QArcballWidget.Tpo -c -o libQarcball_la-moc_QArcballWidget.lo `test -f 'moc_QArcballWidget.cpp' || echo '$(srcdir)/'`moc_QArcballWidget.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball_la-moc_QArcballWidget.Tpo $(DEPDIR)/libQarcball_la-moc_QArcballWidget.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_QArcballWidget.cpp' object='libQarcball_la-moc_QArcballWidget.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libFLarcball_la_CXXFLAGS) $(CXXFLAGS) -c -o libFLarcball_la-FlGlArcballWindow.lo `test -f 'FlGlArcballWindow.cpp' || echo '$(srcdir)/'`FlGlArcballWindow.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball_la-moc_QArcballWidget.lo `test -f 'moc_QArcballWidget.cpp' || echo '$(srcdir)/'`moc_QArcballWidget.cpp
 
-libFLarcball_la-Fl_Custom_Cursor.lo: ../flcursors/fltk1/Fl_Custom_Cursor.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libFLarcball_la_CXXFLAGS) $(CXXFLAGS) -MT libFLarcball_la-Fl_Custom_Cursor.lo -MD -MP -MF $(DEPDIR)/libFLarcball_la-Fl_Custom_Cursor.Tpo -c -o libFLarcball_la-Fl_Custom_Cursor.lo `test -f '../flcursors/fltk1/Fl_Custom_Cursor.cxx' || echo '$(srcdir)/'`../flcursors/fltk1/Fl_Custom_Cursor.cxx
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libFLarcball_la-Fl_Custom_Cursor.Tpo $(DEPDIR)/libFLarcball_la-Fl_Custom_Cursor.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='../flcursors/fltk1/Fl_Custom_Cursor.cxx' object='libFLarcball_la-Fl_Custom_Cursor.lo' libtool=yes @AMDEPBACKSLASH@
+libQarcball_la-QArcballWidget.lo: QArcballWidget.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball_la-QArcballWidget.lo -MD -MP -MF $(DEPDIR)/libQarcball_la-QArcballWidget.Tpo -c -o libQarcball_la-QArcballWidget.lo `test -f 'QArcballWidget.cpp' || echo '$(srcdir)/'`QArcballWidget.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball_la-QArcballWidget.Tpo $(DEPDIR)/libQarcball_la-QArcballWidget.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='QArcballWidget.cpp' object='libQarcball_la-QArcballWidget.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libFLarcball_la_CXXFLAGS) $(CXXFLAGS) -c -o libFLarcball_la-Fl_Custom_Cursor.lo `test -f '../flcursors/fltk1/Fl_Custom_Cursor.cxx' || echo '$(srcdir)/'`../flcursors/fltk1/Fl_Custom_Cursor.cxx
-
-.cxx.o:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ $<
-
-.cxx.obj:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXXCOMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-.cxx.lo:
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LTCXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball_la-QArcballWidget.lo `test -f 'QArcballWidget.cpp' || echo '$(srcdir)/'`QArcballWidget.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
-install-libFLarcball_laHEADERS: $(libFLarcball_la_HEADERS)
+install-libQarcball_laHEADERS: $(libQarcball_la_HEADERS)
 	@$(NORMAL_INSTALL)
-	@list='$(libFLarcball_la_HEADERS)'; test -n "$(libFLarcball_ladir)" || list=; \
+	@list='$(libQarcball_la_HEADERS)'; test -n "$(libQarcball_ladir)" || list=; \
 	if test -n "$$list"; then \
-	  echo " $(MKDIR_P) '$(DESTDIR)$(libFLarcball_ladir)'"; \
-	  $(MKDIR_P) "$(DESTDIR)$(libFLarcball_ladir)" || exit 1; \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(libQarcball_ladir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(libQarcball_ladir)" || exit 1; \
 	fi; \
 	for p in $$list; do \
 	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
 	  echo "$$d$$p"; \
 	done | $(am__base_list) | \
 	while read files; do \
-	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(libFLarcball_ladir)'"; \
-	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(libFLarcball_ladir)" || exit $$?; \
+	  echo " $(INSTALL_HEADER) $$files '$(DESTDIR)$(libQarcball_ladir)'"; \
+	  $(INSTALL_HEADER) $$files "$(DESTDIR)$(libQarcball_ladir)" || exit $$?; \
 	done
 
-uninstall-libFLarcball_laHEADERS:
+uninstall-libQarcball_laHEADERS:
 	@$(NORMAL_UNINSTALL)
-	@list='$(libFLarcball_la_HEADERS)'; test -n "$(libFLarcball_ladir)" || list=; \
+	@list='$(libQarcball_la_HEADERS)'; test -n "$(libQarcball_ladir)" || list=; \
 	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
-	dir='$(DESTDIR)$(libFLarcball_ladir)'; $(am__uninstall_files_from_dir)
+	dir='$(DESTDIR)$(libQarcball_ladir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -627,7 +600,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libFLarcball_ladir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(libQarcball_ladir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -669,7 +642,7 @@ distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
-	distclean-tags
+	distclean-local distclean-tags
 
 dvi: dvi-am
 
@@ -683,7 +656,7 @@ info: info-am
 
 info-am:
 
-install-data-am: install-libFLarcball_laHEADERS
+install-data-am: install-libQarcball_laHEADERS
 
 install-dvi: install-dvi-am
 
@@ -729,29 +702,35 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libFLarcball_laHEADERS \
-	uninstall-libLTLIBRARIES
+uninstall-am: uninstall-libLTLIBRARIES uninstall-libQarcball_laHEADERS
 
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS TAGS all all-am check check-am clean clean-generic \
 	clean-libLTLIBRARIES clean-libtool cscopelist-am ctags \
 	ctags-am distclean distclean-compile distclean-generic \
-	distclean-libtool distclean-tags distdir dvi dvi-am html \
-	html-am info info-am install install-am install-data \
-	install-data-am install-dvi install-dvi-am install-exec \
-	install-exec-am install-html install-html-am install-info \
-	install-info-am install-libFLarcball_laHEADERS \
-	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
+	distclean-libtool distclean-local distclean-tags distdir dvi \
+	dvi-am html html-am info info-am install install-am \
+	install-data install-data-am install-dvi install-dvi-am \
+	install-exec install-exec-am install-html install-html-am \
+	install-info install-info-am install-libLTLIBRARIES \
+	install-libQarcball_laHEADERS install-man install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs maintainer-clean \
 	maintainer-clean-generic mostlyclean mostlyclean-compile \
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags tags-am uninstall uninstall-am \
-	uninstall-libFLarcball_laHEADERS uninstall-libLTLIBRARIES
+	tags tags-am uninstall uninstall-am uninstall-libLTLIBRARIES \
+	uninstall-libQarcball_laHEADERS
 
 .PRECIOUS: Makefile
 
+
+@USE_QT_TRUE@moc_QArcballWidget.cpp:QArcballWidget.h Makefile
+@USE_QT_TRUE@	@MOC@ @MOC_ADD_OPT@ -o$@ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(MOC_CPPFLAGS) QArcballWidget.h # $<
+#	@MOC@ -I@QMK_INC@ -I@QMK_INC@/QtOpenGL -o moc_QArcballWidget.cpp QArcballWidget.h
+
+distclean-local:
+	rm moc_QArcballWidget.cpp
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

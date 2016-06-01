@@ -1,4 +1,4 @@
-SUBDIRS=. math FLui fltkui gtkmmui
+SUBDIRS=. math FLui fltkui gtkmmui qt
 
 noinst_DATA=\
   data/move.xpm\

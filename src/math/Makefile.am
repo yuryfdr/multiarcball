@@ -1,7 +1,4 @@
 
-INCLUDES =
-
-
 AM_CXXFLAGS =
 
 lib_LTLIBRARIES = lib3dmath.la

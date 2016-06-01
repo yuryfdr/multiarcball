@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([multiarcball],0.2.7,[yfdrnchk at mail dot ru])
+AC_INIT([multiarcball],0.3.0,[yfdrnchk at mail dot ru])
 AC_CONFIG_SRCDIR([src/FLui/FlGlArcballWindow.h])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([config.h])
@@ -128,6 +128,7 @@ AM_CONDITIONAL([USE_OLDCURSORS],[test "x$NEWCURSORS" != x1])
 
 AM_CONDITIONAL([USE_FLTK],[test "x$HAVE_FLTK" == x1])
 
+
 #fltk2    
 AC_ARG_ENABLE(fltk2,[  --enable-fltk2   build fltk-2.x GUI part [default=yes] ])
     if test "x$enable_fltk2" != xno; then
@@ -171,15 +172,59 @@ if test "x$enable_gtk" != xno; then
 	AC_SUBST(CXX11REQ)],
 	[ PKG_CHECK_MODULES(SIGC, [sigc++-2.0 >= 2.4]) ]
     )
-#    PKG_CHECK_MODULES(GLADE, [libglademm-2.4 >= 2.4],
-#    [],[AC_MSG_ERROR("can not find glademmlib")])
-#    PKG_CHECK_MODULES(GTHREAD, [gthread-2.0 ],
-#    [
-#    ],[AC_MSG_ERROR("can not find glademmlib")])
 
 fi
 
 AM_CONDITIONAL([USE_GTK],[test "x$HAVE_GTKMM" == x1])
+
+AC_ARG_ENABLE(qt,[  --enable-qt=[auto|qt4|no]   build qt GUI part [default=auto(qt5 prefered)] ])
+AC_ARG_WITH(qt-dir,[  --with-qt-dir - path to Qt binary dir ])
+
+HAVE_QT=0
+QT_OPENGL=Qt5OpenGL
+if test x"$enable_qt" != xno ; then
+    QT_REQ=5
+    MOC_ADD_OPT=""
+    if test x"$enable_qt" == xqt4 ; then
+	QT_OPENGL=QtOpenGL
+	QT_REQ=4
+    fi
+    PKG_CHECK_MODULES(QT, [$QT_OPENGL], [HAVE_QT=1], [AC_MSG_WARN([$QT_OPENGL libraries not found.])])
+    HAVE_QT=`pkg-config --modversion $QT_OPENGL`
+    QT_CFLAGS+=" -fPIC "
+    AC_SUBST(QT_OPENGL)
+    if test x"$HAVE_QT" != x0 ; then
+	AC_MSG_NOTICE([find Qt $HAVE_QT now search for suitable moc])
+	if test "x$with_qt_dir" != x ;then
+	    QT_DIR=$with_qt_dir
+	fi
+        AC_PATH_PROG(MOC, [moc] ,[], [$QT_DIR:$PATH])
+        if test -z "$MOC" ; then #|| test -z "$UIC" || test -z "$RCC"; then
+		AC_MSG_ERROR([Qt utility programs moc are required.])
+        fi
+	MOC_VER="$($MOC -v 2>&1)"
+	case $MOC_VER in
+	    *$HAVE_QT*)
+	    AC_MSG_NOTICE([moc found $MOC_VER])
+	;;
+	*)
+	    MOC_VER="$($MOC --qt$QT_REQ -v 2>&1)"
+	    case $MOC_VER in
+	    *$HAVE_QT*)
+	    MOC_ADD_OPT=" --qt$QT_REQ "
+	    ;;
+	    *)
+	    AC_MSG_ERROR([ $MOC version differ from Qt version $HAVE_QT try use --with-qt-dir])
+	    ;;
+	    esac
+	;;
+	esac
+	AC_SUBST(MOC_ADD_OPT)
+    fi
+fi
+
+AC_SUBST(HAVE_QT)
+AM_CONDITIONAL([USE_QT],[test x"$HAVE_QT" != x0])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
@@ -198,11 +243,13 @@ AC_CONFIG_FILES([Makefile
                  src/fltkui/Makefile
                  src/gtkmmui/Makefile
                  src/math/Makefile
+                 src/qt/Makefile
 		 test/Makefile
 		 vc/Makefile
 		 multiarcball.pc
 		 multiarcball-FL.pc
 		 multiarcball-fltk2.pc
 		 multiarcballmm.pc
+		 multiarcballQt.pc
 		 ])
 AC_OUTPUT
