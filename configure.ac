@@ -130,10 +130,11 @@ AM_CONDITIONAL([USE_FLTK],[test "x$HAVE_FLTK" == x1])
 
 
 #fltk2    
-AC_ARG_ENABLE(fltk2,[  --enable-fltk2   build fltk-2.x GUI part [default=yes] ])
-    if test "x$enable_fltk2" != xno; then
-       AC_PATH_PROG(FLTK2,fltk2-config)        
-    fi
+HAVE_FLTK2=""
+AC_ARG_ENABLE(fltk2,[  --enable-fltk2   build fltk-2.x GUI part [default=no] ])
+
+if test "x$enable_fltk2" == xyes; then
+    AC_PATH_PROG(FLTK2,fltk2-config)        
     if test "x$FLTK2" != x; then
       HAVE_FLTK2=1
       AC_SUBST([FL2_CXXFLAGS],["`$FLTK2 --cxxflags` $CXXFLAGS"])
@@ -141,9 +142,9 @@ AC_ARG_ENABLE(fltk2,[  --enable-fltk2   build fltk-2.x GUI part [default=yes] ])
     else
       AC_MSG_WARN("can not find fltk2-config in ${with_fltk_dir}/bin $PATH")
     fi
+fi
 
 AC_SUBST(HAVE_FLTK2)
-    
 AM_CONDITIONAL([USE_FLTK2],[test "x$HAVE_FLTK2" == x1])
 
 # modify pkg-config path

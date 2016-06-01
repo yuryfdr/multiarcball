@@ -1472,7 +1472,7 @@ Optional Features:
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-fltk   build fltk-1.x.x GUI part default=yes
-  --enable-fltk2   build fltk-2.x GUI part default=yes
+  --enable-fltk2   build fltk-2.x GUI part default=no
   --enable-gtk   build gtkmm GUI part default=yes
   --enable-qt=auto|qt4|no   build qt GUI part default=auto(qt5 prefered)
 
@@ -16293,13 +16293,15 @@ fi
 
 
 #fltk2
+HAVE_FLTK2=""
 # Check whether --enable-fltk2 was given.
 if test "${enable_fltk2+set}" = set; then :
   enableval=$enable_fltk2;
 fi
 
-    if test "x$enable_fltk2" != xno; then
-       # Extract the first word of "fltk2-config", so it can be a program name with args.
+
+if test "x$enable_fltk2" == xyes; then
+    # Extract the first word of "fltk2-config", so it can be a program name with args.
 set dummy fltk2-config; ac_word=$2
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for $ac_word" >&5
 $as_echo_n "checking for $ac_word... " >&6; }
@@ -16339,7 +16341,6 @@ $as_echo "no" >&6; }
 fi
 
 
-    fi
     if test "x$FLTK2" != x; then
       HAVE_FLTK2=1
       FL2_CXXFLAGS="`$FLTK2 --cxxflags` $CXXFLAGS"
@@ -16350,7 +16351,7 @@ fi
       { $as_echo "$as_me:${as_lineno-$LINENO}: WARNING: \"can not find fltk2-config in ${with_fltk_dir}/bin $PATH\"" >&5
 $as_echo "$as_me: WARNING: \"can not find fltk2-config in ${with_fltk_dir}/bin $PATH\"" >&2;}
     fi
-
+fi
 
 
  if test "x$HAVE_FLTK2" == x1; then
