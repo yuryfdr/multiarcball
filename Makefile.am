@@ -9,10 +9,13 @@ endif
 if USE_GTK
 mmpc=multiarcballmm.pc
 endif
+if USE_GTK
+qtpc=multiarcballQt.pc
+endif
 
 
 pkgconfigdir= $(libdir)/pkgconfig
-pkgconfig_DATA= multiarcball.pc $(flpc) $(fl2pc) $(mmpc)
+pkgconfig_DATA= multiarcball.pc $(flpc) $(fl2pc) $(mmpc) $(qtpc)
 
 noinst_DATA=TODO Doxyfile
 
