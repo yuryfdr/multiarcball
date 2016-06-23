@@ -1,6 +1,13 @@
+23.06.2016
+    - v 0.3.1
+    - qt5 and qt4 parallel build
+    - change Qt header location (Qt4 and Qt5)
+    - Qt5 is still used Qt5OpenGL module
+    - fltk2 is deprecated
 01.06.2016
     - v 0.3.0
     - add qt (5 or 4) support
+    - vc build - is unsupported
 20.05.2016
     - v 0.2.6
     - use new cursor call with fltk>=1.3.3

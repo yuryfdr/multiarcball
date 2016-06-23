@@ -72,22 +72,34 @@ testmath_LDFLAGS =
 testmath_LDADD = 
 
 
-if USE_QT
+if USE_QT4
+testqt4 = testQt4
+
+testQt4_CXXFLAGS =  @QT4_CFLAGS@ -I../src/qt 
+
+testQt4_SOURCES = testQt.cpp
+
+testQt4_LDFLAGS = ../src/qt/libQarcball4.la 
+
+testQt4_LDADD =
+
+
+endif
+if USE_QT5
 testqt = testQt
 
 testQt_CXXFLAGS =  @QT_CFLAGS@ -I../src/qt 
 
 testQt_SOURCES = testQt.cpp
 
-testQt_LDFLAGS = ../src/qt/libQarcball.la 
+testQt_LDFLAGS = ../src/qt/libQarcball5.la 
 
 testQt_LDADD =
-
 
 endif
  
 
-noinst_PROGRAMS= ${testmath} ${testfl} ${testfl1ex} ${testfltk} ${testmm} ${exmm} ${testqt}
+noinst_PROGRAMS= ${testmath} ${testfl} ${testfl1ex} ${testfltk} ${testmm} ${exmm} ${testqt}  ${testqt4}
 
 noinst_HEADERS= draw_cube.h
 

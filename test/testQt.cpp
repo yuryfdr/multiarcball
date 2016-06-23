@@ -25,38 +25,6 @@
 #include <QMainWindow>
 #include <QApplication>
 
-//make derived class
-/*class testarc : public FlGlArcballWindow{
-  public:
-    testarc(int W,int H,const char*L=0):FlGlArcballWindow(W,H,L){}
-    //rewrite draw method
-    virtual void draw(){
-      reshape();
-      if(!valid()){
-      static GLfloat light_diffuse[] = {1.0, 0.0, 0.0, 1.0};
-      static GLfloat light_position[] = {1.0, 1.0, 1.0, 0.0};
-      glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-      glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-      glEnable(GL_LIGHTING);
-      glEnable(GL_LIGHT0);
-      }
-      valid(1);
-      glClearColor (0.25,0.5,0.5, 1.0);
-      glDepthFunc (GL_LESS);
-      glEnable (GL_DEPTH_TEST);
-      glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-      glPushMatrix();
-      arcball_transform();//apply transformation
-      draw_axis();
-      draw_zoom_scale();      
-      drawCube();
-      
-      draw_3d_orbit();
-      glPopMatrix();
-      glFinish();
-    }
-};*/
 class testarc : public QArcballWidget{
 public:
 testarc(QWidget*p=0):QArcballWidget(p){
@@ -64,7 +32,7 @@ testarc(QWidget*p=0):QArcballWidget(p){
 void paintGL(){
   glClearColor(0.25,0.5,0.5, 1.0);
   glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  reshape();
+  //reshape();
   glPushMatrix();
   arcball_transform();
   draw_axis();
@@ -78,6 +46,7 @@ int main(int argc,char** argv){
   QApplication app(argc,argv);
   QMainWindow win;
   testarc glw;
+  glw.resize(640,480);
   win.setCentralWidget(&glw);
   win.show();
   return app.exec();

@@ -91,7 +91,7 @@ build_triplet = @build@
 host_triplet = @host@
 noinst_PROGRAMS = $(am__EXEEXT_1) $(am__EXEEXT_2) $(am__EXEEXT_3) \
 	$(am__EXEEXT_4) $(am__EXEEXT_5) $(am__EXEEXT_6) \
-	$(am__EXEEXT_7)
+	$(am__EXEEXT_7) $(am__EXEEXT_8)
 subdir = test
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -109,7 +109,8 @@ am__EXEEXT_1 = testmath$(EXEEXT)
 @USE_FLTK2_TRUE@am__EXEEXT_4 = testfl2$(EXEEXT)
 @USE_GTK_TRUE@am__EXEEXT_5 = testgtkmm$(EXEEXT)
 @USE_GTK_TRUE@am__EXEEXT_6 = examplegtkmm$(EXEEXT)
-@USE_QT_TRUE@am__EXEEXT_7 = testQt$(EXEEXT)
+@USE_QT5_TRUE@am__EXEEXT_7 = testQt$(EXEEXT)
+@USE_QT4_TRUE@am__EXEEXT_8 = testQt4$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
 am__examplefl1_SOURCES_DIST = exampleFL.cpp
 @USE_FLTK_TRUE@am_examplefl1_OBJECTS = examplefl1-exampleFL.$(OBJEXT)
@@ -131,12 +132,19 @@ examplegtkmm_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(examplegtkmm_CXXFLAGS) \
 	$(CXXFLAGS) $(examplegtkmm_LDFLAGS) $(LDFLAGS) -o $@
 am__testQt_SOURCES_DIST = testQt.cpp
-@USE_QT_TRUE@am_testQt_OBJECTS = testQt-testQt.$(OBJEXT)
+@USE_QT5_TRUE@am_testQt_OBJECTS = testQt-testQt.$(OBJEXT)
 testQt_OBJECTS = $(am_testQt_OBJECTS)
 testQt_DEPENDENCIES =
 testQt_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(testQt_CXXFLAGS) \
 	$(CXXFLAGS) $(testQt_LDFLAGS) $(LDFLAGS) -o $@
+am__testQt4_SOURCES_DIST = testQt.cpp
+@USE_QT4_TRUE@am_testQt4_OBJECTS = testQt4-testQt.$(OBJEXT)
+testQt4_OBJECTS = $(am_testQt4_OBJECTS)
+testQt4_DEPENDENCIES =
+testQt4_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(testQt4_CXXFLAGS) \
+	$(CXXFLAGS) $(testQt4_LDFLAGS) $(LDFLAGS) -o $@
 am__testfl1_SOURCES_DIST = testFL.cpp
 @USE_FLTK_TRUE@am_testfl1_OBJECTS = testfl1-testFL.$(OBJEXT)
 testfl1_OBJECTS = $(am_testfl1_OBJECTS)
@@ -199,12 +207,13 @@ am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
 SOURCES = $(examplefl1_SOURCES) $(examplegtkmm_SOURCES) \
-	$(testQt_SOURCES) $(testfl1_SOURCES) $(testfl2_SOURCES) \
-	$(testgtkmm_SOURCES) $(testmath_SOURCES)
+	$(testQt_SOURCES) $(testQt4_SOURCES) $(testfl1_SOURCES) \
+	$(testfl2_SOURCES) $(testgtkmm_SOURCES) $(testmath_SOURCES)
 DIST_SOURCES = $(am__examplefl1_SOURCES_DIST) \
 	$(am__examplegtkmm_SOURCES_DIST) $(am__testQt_SOURCES_DIST) \
-	$(am__testfl1_SOURCES_DIST) $(am__testfl2_SOURCES_DIST) \
-	$(am__testgtkmm_SOURCES_DIST) $(testmath_SOURCES)
+	$(am__testQt4_SOURCES_DIST) $(am__testfl1_SOURCES_DIST) \
+	$(am__testfl2_SOURCES_DIST) $(am__testgtkmm_SOURCES_DIST) \
+	$(testmath_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -276,6 +285,7 @@ HAVE_FLTK = @HAVE_FLTK@
 HAVE_FLTK2 = @HAVE_FLTK2@
 HAVE_GTKMM = @HAVE_GTKMM@
 HAVE_QT = @HAVE_QT@
+HAVE_QT4 = @HAVE_QT4@
 HAVE_XCURSOR = @HAVE_XCURSOR@
 INSTALL = @INSTALL@
 INSTALL_DATA = @INSTALL_DATA@
@@ -299,6 +309,8 @@ MANIFEST_TOOL = @MANIFEST_TOOL@
 MA_LT_VERSION = @MA_LT_VERSION@
 MKDIR_P = @MKDIR_P@
 MOC = @MOC@
+MOC4 = @MOC4@
+MOC4_ADD_OPT = @MOC4_ADD_OPT@
 MOC_ADD_OPT = @MOC_ADD_OPT@
 NM = @NM@
 NMEDIT = @NMEDIT@
@@ -319,9 +331,10 @@ PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
+QT4_CFLAGS = @QT4_CFLAGS@
+QT4_LIBS = @QT4_LIBS@
 QT_CFLAGS = @QT_CFLAGS@
 QT_LIBS = @QT_LIBS@
-QT_OPENGL = @QT_OPENGL@
 RANLIB = @RANLIB@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
@@ -414,11 +427,16 @@ testmath_CXXFLAGS =
 testmath_SOURCES = testmath.cpp
 testmath_LDFLAGS = 
 testmath_LDADD = 
-@USE_QT_TRUE@testqt = testQt
-@USE_QT_TRUE@testQt_CXXFLAGS = @QT_CFLAGS@ -I../src/qt 
-@USE_QT_TRUE@testQt_SOURCES = testQt.cpp
-@USE_QT_TRUE@testQt_LDFLAGS = ../src/qt/libQarcball.la 
-@USE_QT_TRUE@testQt_LDADD = 
+@USE_QT4_TRUE@testqt4 = testQt4
+@USE_QT4_TRUE@testQt4_CXXFLAGS = @QT4_CFLAGS@ -I../src/qt 
+@USE_QT4_TRUE@testQt4_SOURCES = testQt.cpp
+@USE_QT4_TRUE@testQt4_LDFLAGS = ../src/qt/libQarcball4.la 
+@USE_QT4_TRUE@testQt4_LDADD = 
+@USE_QT5_TRUE@testqt = testQt
+@USE_QT5_TRUE@testQt_CXXFLAGS = @QT_CFLAGS@ -I../src/qt 
+@USE_QT5_TRUE@testQt_SOURCES = testQt.cpp
+@USE_QT5_TRUE@testQt_LDFLAGS = ../src/qt/libQarcball5.la 
+@USE_QT5_TRUE@testQt_LDADD = 
 noinst_HEADERS = draw_cube.h
 all: all-am
 
@@ -475,6 +493,10 @@ testQt$(EXEEXT): $(testQt_OBJECTS) $(testQt_DEPENDENCIES) $(EXTRA_testQt_DEPENDE
 	@rm -f testQt$(EXEEXT)
 	$(AM_V_CXXLD)$(testQt_LINK) $(testQt_OBJECTS) $(testQt_LDADD) $(LIBS)
 
+testQt4$(EXEEXT): $(testQt4_OBJECTS) $(testQt4_DEPENDENCIES) $(EXTRA_testQt4_DEPENDENCIES) 
+	@rm -f testQt4$(EXEEXT)
+	$(AM_V_CXXLD)$(testQt4_LINK) $(testQt4_OBJECTS) $(testQt4_LDADD) $(LIBS)
+
 testfl1$(EXEEXT): $(testfl1_OBJECTS) $(testfl1_DEPENDENCIES) $(EXTRA_testfl1_DEPENDENCIES) 
 	@rm -f testfl1$(EXEEXT)
 	$(AM_V_CXXLD)$(testfl1_LINK) $(testfl1_OBJECTS) $(testfl1_LDADD) $(LIBS)
@@ -500,6 +522,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/examplefl1-exampleFL.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/examplegtkmm-exampleGtkmm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testQt-testQt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testQt4-testQt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testfl1-testFL.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testfl2-testFL2.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testgtkmm-testGtkmm.Po@am__quote@
@@ -567,6 +590,20 @@ testQt-testQt.obj: testQt.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='testQt.cpp' object='testQt-testQt.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testQt_CXXFLAGS) $(CXXFLAGS) -c -o testQt-testQt.obj `if test -f 'testQt.cpp'; then $(CYGPATH_W) 'testQt.cpp'; else $(CYGPATH_W) '$(srcdir)/testQt.cpp'; fi`
+
+testQt4-testQt.o: testQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testQt4_CXXFLAGS) $(CXXFLAGS) -MT testQt4-testQt.o -MD -MP -MF $(DEPDIR)/testQt4-testQt.Tpo -c -o testQt4-testQt.o `test -f 'testQt.cpp' || echo '$(srcdir)/'`testQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/testQt4-testQt.Tpo $(DEPDIR)/testQt4-testQt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='testQt.cpp' object='testQt4-testQt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testQt4_CXXFLAGS) $(CXXFLAGS) -c -o testQt4-testQt.o `test -f 'testQt.cpp' || echo '$(srcdir)/'`testQt.cpp
+
+testQt4-testQt.obj: testQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testQt4_CXXFLAGS) $(CXXFLAGS) -MT testQt4-testQt.obj -MD -MP -MF $(DEPDIR)/testQt4-testQt.Tpo -c -o testQt4-testQt.obj `if test -f 'testQt.cpp'; then $(CYGPATH_W) 'testQt.cpp'; else $(CYGPATH_W) '$(srcdir)/testQt.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/testQt4-testQt.Tpo $(DEPDIR)/testQt4-testQt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='testQt.cpp' object='testQt4-testQt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testQt4_CXXFLAGS) $(CXXFLAGS) -c -o testQt4-testQt.obj `if test -f 'testQt.cpp'; then $(CYGPATH_W) 'testQt.cpp'; else $(CYGPATH_W) '$(srcdir)/testQt.cpp'; fi`
 
 testfl1-testFL.o: testFL.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(testfl1_CXXFLAGS) $(CXXFLAGS) -MT testfl1-testFL.o -MD -MP -MF $(DEPDIR)/testfl1-testFL.Tpo -c -o testfl1-testFL.o `test -f 'testFL.cpp' || echo '$(srcdir)/'`testFL.cpp

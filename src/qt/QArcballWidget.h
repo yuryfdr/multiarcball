@@ -21,18 +21,34 @@
 #ifndef CGLWIDGET_H
 #define CGLWIDGET_H
 
+#include <qglobal.h>
+#if 1//(QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#define HAVE_QT4 1
+#endif
+#ifdef HAVE_QT4
 #include <QGLWidget>
+#else
+#include <QOpenGLWidget>
+#include <QPainter>
+#include <QOpenGLFunctions>
+#endif
 #include "3dcontrols.h"
 #include "basic_ball.h"
 
 
+#if HAVE_QT4
 class QArcballWidget : public QGLWidget , public controls3d::basic_ball
+#else
+class QArcballWidget : public QOpenGLWidget , protected QOpenGLFunctions, public controls3d::basic_ball
+#endif
 {
     Q_OBJECT
 public:
     explicit QArcballWidget(QWidget *parent = 0);
 protected:
-    virtual void paintGL(){};
+    virtual void initializeGL();
+//    virtual void paintGL(){};
+    virtual void resizeGL(int w,int h);
     void mousePressEvent ( QMouseEvent * event );
     void mouseReleaseEvent ( QMouseEvent * event );
     void mouseMoveEvent ( QMouseEvent * event );
