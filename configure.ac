@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([multiarcball],0.3.1,[yfdrnchk at mail dot ru])
+AC_INIT([multiarcball],0.3.2,[yfdrnchk at mail dot ru])
 AC_CONFIG_SRCDIR([src/FLui/FlGlArcballWindow.h])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([config.h])
@@ -189,6 +189,7 @@ if test x"$enable_qt5" != xno ; then
     QT5_MODULE=Qt5OpenGL
     PKG_CHECK_MODULES(QT, [$QT5_MODULE], [HAVE_QT=1], [AC_MSG_WARN([Qt5widgets libraries not found.])])
     HAVE_QT=`pkg-config --modversion $QT5_MODULE`
+    AC_SUBST(QT5_MODULE)
     QT_CFLAGS+=" -fPIC "
     if test x"$HAVE_QT" != x0 ; then
 	AC_MSG_NOTICE([find Qt $HAVE_QT now search for suitable moc])

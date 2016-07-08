@@ -9,7 +9,7 @@ endif
 if USE_GTK
 mmpc=multiarcballmm.pc
 endif
-if USE_GTK
+if USE_QT5 #pkg-config file only for qt5
 qtpc=multiarcballQt.pc
 endif
 

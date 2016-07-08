@@ -5,7 +5,7 @@ includedir=${prefix}/include
 
 Name: @PACKAGE_NAME@
 Description: Multiple Toolkit Arcball Qt
-Requires: @QT_OPENGL@ @PACKAGE_NAME@
+Requires: @QT5_MODULE@ @PACKAGE_NAME@
 Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lQarcball
 Cflags: -I${includedir}/@PACKAGE_NAME@

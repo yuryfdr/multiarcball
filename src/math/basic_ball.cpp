@@ -1,22 +1,22 @@
-/* 
+/*
    Copyright 2006-2008 by the Yury Fedorchenko.
-   
+
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-  
+
   You should have received a copy of the GNU Lesser General Public
   License along with main.c; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
-  
+
   Please report all bugs and problems to "yuryfdr@users.sourceforge.net".
-   
+
 */
 
 #include "basic_ball.h"
@@ -76,18 +76,18 @@ void basic_ball::reshape(){
   }
   // GL calls.
   glViewport(0, 0, w__, h__);
-  
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  if ( projtype == Perspective ) 
+  if ( projtype == Perspective )
     gluPerspective(fovy,aspect_ratio,near_cp,far_cp);
   else if ( projtype == Orthographic)
     glOrtho(umin,umax,vmin,vmax,near_cp,far_cp);
-  
+
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
   gluLookAt(eyex,eyey,eyez,cenx,ceny,cenz,upx,upy,upz);
-  
+
   dist = sqrt( pow2(cenx-eyex) + pow2(ceny-eyey) + pow2(cenz-eyez) );
 }
 
@@ -96,8 +96,6 @@ void basic_ball::handle_rotate(mvct::XY mouse,bool push,bool release){
   if ( currenttr != controls3d::NoTransform && currenttr != controls3d::Rotate ) return;
     currenttr = controls3d::Rotate;
   // Transform coords to lie between -1 to 1
-/*    x = ( double(event->x << 1) / get_width() ) - 1.0;
-  y = ( -double(event->y << 1) / get_height() ) + 1.0;*/
   double y = ( -2.*mouse.y ) + 1.0;
   double x = ( 2.*mouse.x ) - 1.0;
   static double my;
@@ -134,7 +132,7 @@ void basic_ball::handle_rotate(mvct::XY mouse,bool push,bool release){
     }
   }else{
     arcball.mouse(XYZ(x,y,0));
-  
+
     if( push ){
       arcball.begin_drag();
       cursor(CursorRotate);
@@ -155,9 +153,7 @@ void basic_ball::handle_pan(mvct::XY mouse,bool push,bool release){
     // Transform coords to lie between -1 to 1
     double x = ( 2.*mouse.x ) - 1.0;
     double y = ( -2.*mouse.y ) + 1.0;
-//    x = ( double(Fl::event_x() << 1) / w() ) - 1.0;
-//    y = ( -double(Fl::event_y() << 1) / h() ) + 1.0;
-    
+
     // Adjust the x and y values so that moving mouse by 1 pixel
     // on screen moves point under mouse by 1 pixel
     double tx=0, ty=0;
@@ -172,7 +168,7 @@ void basic_ball::handle_pan(mvct::XY mouse,bool push,bool release){
       ty = y*dist*tan(mvct::deg2rad(fovy*0.5));
     }
     trcontrol.mouse(XYZ(tx,ty,0));
-    
+
     if( push ){
       trcontrol.begin_drag();
       cursor(CursorMove);
@@ -189,9 +185,9 @@ void basic_ball::handle_zoom(mvct::XY mouse,bool push,bool release){
   currenttr = controls3d::Zoom;
   // Transform coords to lie between -1 to 1
   double z = ( 2.*mouse.x ) - 1.0;
-  
+
   zoomcontrol.mouse(XYZ(z,z,z));
-  
+
   if ( push ){
     zoomcontrol.begin_drag();
     cursor(CursorZoom);
@@ -210,7 +206,7 @@ void basic_ball::handle_dolly(mvct::XY mouse,bool push,bool release){
   //z = ( double(Fl::event_x() << 1) / w() ) - 1.0;
   double z = ( 2.*mouse.x ) - 1.0;
   dollycontrol.mouse(XYZ(0,0,z));// dollycontrol.update();
-    
+
   if ( push ) dollycontrol.begin_drag();
   else if ( release ) {
     dollycontrol.end_drag();
@@ -285,7 +281,7 @@ void basic_ball::arcball_transformRotate()const
 }
 void basic_ball::arcball_transform()const{                     // Apply the arcball transformation
   double mat[16];
-  
+
   // Do the dollying separately before everything else
   glTranslated(0,0,dollycontrol.dolly_value());
   switch ( currenttr ) {
@@ -417,7 +413,7 @@ void basic_ball::draw_zoom_scale(){
     glVertex3d(-.1*i,view_height(),0);
     glVertex3d(-.1*i-.1,view_height(),0);
     glVertex3d(-.1*i-.1,view_height()-20,0);
-    
+
     glVertex3d(-.1*i-.1,view_height()-20,0);
     glVertex3d(-.1*i-.1,view_height()-10,0);
     glVertex3d(-.1*i-.2,view_height()-10,0);
@@ -439,7 +435,7 @@ void basic_ball::draw_zoom_scale(){
     if(sval < 1. || sval >1.e+6 )text(text_size,-.1*i-.2,view_height()-12,0.,"%.4e",sval);
     else text(text_size,-.1*i-.2,view_height()-12,0.,"%g",sval);
   }
-  
+
   glBegin(GL_LINES);
   for(int i=0;i<10;i++){
     glColor4d (0., 0., 0., 0.8);
@@ -469,7 +465,7 @@ void basic_ball::draw_3d_orbit(){
   glMatrixMode(GL_PROJECTION);
   glPushMatrix();
   glLoadIdentity();
-  if ( projtype == Perspective ) 
+  if ( projtype == Perspective )
     gluPerspective(fovy,aspect_ratio,near_cp,far_cp);
   else if ( projtype == Orthographic)
     //glOrtho(umin,umax,vmin,vmax,near_cp,far_cp);
@@ -482,7 +478,7 @@ void basic_ball::draw_3d_orbit(){
   glLoadIdentity();
   glTranslatef(Rmax*w/h-Rmax/3.,2.*Rmax/3.,+5.*Rmax/*-5.*Rmax*/);
 
-  arcball_transformRotate();  
+  arcball_transformRotate();
 
   glPushAttrib(GL_LIGHTING_BIT);
   glEnable(GL_LIGHTING);
@@ -556,188 +552,3 @@ void basic_ball::text(int size, GLfloat x, GLfloat y, GLfloat z,const char *form
   stext(size,x,y,z,buffer);
 }
 
-#if 0
-// legacy drawing 
-
-#define LG_NSEGS 4
-#define NSEGS (1<<LG_NSEGS)
-#define CIRCSEGS 32
-#define HALFCIRCSEGS 16
-
-inline void glVertex(const XYZ&v){
-  glVertex3dv(reinterpret_cast<const double*>(&v));
-}
-inline void glColor(const XYZ&v){
-  glColor3dv(reinterpret_cast<const double*>(&v));
-}
-inline void glScale(const XYZ&v){
-  glScaled(v[0],v[1],v[3]);
-}
-
-
-static void unitCircle(void)
-{
-  // Draw a unit circle in the XY plane, centered at the origin
-  float dtheta = 2.0*M_PI/32.0;
-  
-  glBegin (GL_LINE_LOOP);
-  for (int i=0; i < 32; ++i)
-    glVertex3d (cos (i*dtheta), sin (i*dtheta), 0.0);
-  glEnd ();
-}
-
-/*
- * Draw a circle with the given normal, center and radius 
- */
-static void drawCircle (const XYZ& center, const XYZ& normal, double radius)
-{
-  // First find the coordinate axis centered at the circle center.
-  // The normal will be the Z axis.
-  XYZ xaxis, yaxis, zaxis;
-  
-  zaxis = normalized (normal);
-  xaxis = XYZ (0,1,0) ^ zaxis;
-  if ( xaxis.abs2() < 1.0e-5 ) 
-    xaxis.set (1,0,0);
-  yaxis = zaxis ^ xaxis;
-  
-  // Circle will be on the XY plane, defined by the axis system 
-  // just computed 
-  XYZ pts[CIRCSEGS+1];
-  double theta = 0.0, dtheta = M_PI/HALFCIRCSEGS;
-  double costheta, sintheta;
-  for (int i=0; i < (HALFCIRCSEGS >> 2); ++i )
-    {
-      costheta = radius*cos (theta); sintheta = radius*sin (theta);
-      pts[0] = center + costheta*xaxis + sintheta*yaxis;
-      pts[HALFCIRCSEGS-i] = center - costheta*xaxis + sintheta*yaxis;
-      pts[HALFCIRCSEGS+i] = center - costheta*xaxis - sintheta*yaxis;
-      pts[CIRCSEGS-i] = center + costheta*xaxis - sintheta*yaxis;
-      theta += dtheta;
-    }
-  
-  glBegin (GL_LINE_LOOP);
-  {
-    for (int i=0; i < CIRCSEGS; ++i)
-      glVertex (pts[i]);
-  }
-  glEnd ();
-}
-
-/*
- * Halve arc between unit vectors v1 and v2.
- * Assumes that v1 and v3 are unit vectors
- */
-static XYZ bisect (const XYZ& v1, const XYZ& v2)
-{
-  XYZ v = v1 + v2;
-  double Nv = v.abs2();
-  
-  if (Nv < 1.0e-5) v.set (0.0, 0.0, 1.0);
-  else v /= sqrt(Nv);
-  return v;
-}
-
-/*
- *  Draw an arc defined by its ends.
- */
-static void drawAnyArc (const XYZ& vFrom, const XYZ& vTo)
-{
-  int i;
-  XYZ pts[NSEGS+1];
-  double dot;
-  
-  pts[0] = vFrom;
-  pts[1] = pts[NSEGS] = vTo;
-  for (i=0; i < LG_NSEGS; ++i) pts[1] = bisect (pts[0], pts[1]);
-  
-  dot = 2.0*(pts[0]*pts[1]);
-  for (i=2; i < NSEGS; ++i)
-    pts[i] = pts[i-1]*dot - pts[i-2];
-  
-  glBegin (GL_LINE_STRIP);
-  for (i=0; i <= NSEGS; ++i)
-    glVertex (pts[i]);
-  glEnd ();
-}
-
-/*
- * Draw the arc of a semi-circle defined by its axis.
- */
-static void drawHalfArc(const XYZ& n)
-{
-  XYZ p, m;
-  
-  if ( fabs(n[2]-1.0) > 1.0e-5 ){
-    p[0] = n[1]; p[1] = -n[0];
-    normalize(p);
-  }else{
-    p[0] = 0; p[1] = 1;
-  }
-  m = p ^ n;
-  drawAnyArc (p, m);
-  drawAnyArc (m, -p);
-}
-
-/**
- * Draw all constraint arcs.
- */
-void basic_ball::drawConstraints (void) const
-{
-  if ( arcball.axis() == controls3d::ArcballCntrl::NoAxes ) return;
-  
-  XYZ axis;
-  int i;
-  for(i=0; i < 3; ++i){
-    if( arcball.axis_index() != i){
-	    if(arcball.dragging()) continue;
-	    glColor(far_color_);
-	  }else glColor (near_color_);
-      
-    axis = arcball.AxesSets[arcball.axis()][i];
-    if ( fabs(axis[2]-1.0) < 1.0e-5 ) unitCircle();
-    else drawHalfArc(axis);
-  }
-}
-
-/**
- *  Draw "rubber band" arc during dragging.
- */
-void basic_ball::drawDragArc(void)
-{
-  if ( arcball.dragging () )
-    {
-      glColor (drag_color_);
-      drawAnyArc ((arcball.from ()), (arcball.to ()));
-    }
-}
-
-/**
- * Draw the controller with all its arcs. Parameter is the vector from 
- * the eye point to the center of interest. Default is -ve Z axis
- */
-void basic_ball::arcball_draw ()
-{
-  glMatrixMode(GL_PROJECTION);
-  glPushMatrix();
-  glLoadIdentity();
-  glOrtho(-1.0,1.0,-1.0,1.0,-1.0,1.0);
-  
-  glMatrixMode(GL_MODELVIEW);
-  glPushMatrix();
-  glLoadIdentity();
-  {
-    glColor (rim_color_);
-    glScaled (arcball.radius (), arcball.radius (), arcball.radius ());
-    unitCircle();
-    
-    drawConstraints();
-    drawDragArc();
-  }
-  glPopMatrix();
-  glMatrixMode(GL_PROJECTION);
-  glPopMatrix();
-  glMatrixMode(GL_MODELVIEW);
-}
-
-#endif
