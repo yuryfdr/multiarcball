@@ -86,7 +86,7 @@ testQt4_LDADD =
 
 endif
 if USE_QT5
-testqt = testQt
+testqt = testQt exampleQt
 
 testQt_CXXFLAGS =  @QT_CFLAGS@ -I../src/qt 
 
@@ -96,11 +96,20 @@ testQt_LDFLAGS = ../src/qt/libQarcball5.la
 
 testQt_LDADD =
 
+exampleQt_CXXFLAGS =  @QT_CFLAGS@ -I../src/qt 
+
+exampleQt_SOURCES = exampleQt.cpp moc_exampleQt.cpp 
+
+exampleQt_LDFLAGS = ../src/qt/libQarcball5.la 
+
+moc_exampleQt.cpp:exampleQt.h
+	@MOC@ @MOC_ADD_OPT@ -o$@ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(MOC_CPPFLAGS) exampleQt.h
+
 endif
  
 
 noinst_PROGRAMS= ${testmath} ${testfl} ${testfl1ex} ${testfltk} ${testmm} ${exmm} ${testqt}  ${testqt4}
 
-noinst_HEADERS= draw_cube.h
+noinst_HEADERS= draw_cube.h exampleQt.h
 
 all: ${test_PROGRAMS}

@@ -7,7 +7,9 @@ QA4 = libQarcball4.la
 
 libQarcball4_la_CXXFLAGS =  @QT4_CFLAGS@ 
 
-libQarcball4_la_SOURCES = moc_QArcballWidget4.cpp QArcballWidget.cpp 
+nodist_libQarcball4_la_SOURCES = moc_QArcballWidget4.cpp
+
+libQarcball4_la_SOURCES = QArcballWidget.cpp 
 
 libQarcball4_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @QT4_LIBS@ -version-info @MA_LT_VERSION@ 
 
@@ -28,7 +30,9 @@ QA5 = libQarcball5.la
 
 libQarcball5_la_CXXFLAGS =  @QT_CFLAGS@ 
 
-libQarcball5_la_SOURCES = moc_QArcballWidget5.cpp QArcballWidget.cpp 
+nodist_libQarcball5_la_SOURCES = moc_QArcballWidget5.cpp 
+
+libQarcball5_la_SOURCES = QArcballWidget.cpp 
 
 libQarcball5_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @QT_LIBS@ -version-info @MA_LT_VERSION@ 
 

@@ -109,17 +109,25 @@ am__EXEEXT_1 = testmath$(EXEEXT)
 @USE_FLTK2_TRUE@am__EXEEXT_4 = testfl2$(EXEEXT)
 @USE_GTK_TRUE@am__EXEEXT_5 = testgtkmm$(EXEEXT)
 @USE_GTK_TRUE@am__EXEEXT_6 = examplegtkmm$(EXEEXT)
-@USE_QT5_TRUE@am__EXEEXT_7 = testQt$(EXEEXT)
+@USE_QT5_TRUE@am__EXEEXT_7 = testQt$(EXEEXT) exampleQt$(EXEEXT)
 @USE_QT4_TRUE@am__EXEEXT_8 = testQt4$(EXEEXT)
 PROGRAMS = $(noinst_PROGRAMS)
-am__examplefl1_SOURCES_DIST = exampleFL.cpp
-@USE_FLTK_TRUE@am_examplefl1_OBJECTS = examplefl1-exampleFL.$(OBJEXT)
-examplefl1_OBJECTS = $(am_examplefl1_OBJECTS)
-examplefl1_DEPENDENCIES =
+am__exampleQt_SOURCES_DIST = exampleQt.cpp moc_exampleQt.cpp
+@USE_QT5_TRUE@am_exampleQt_OBJECTS = exampleQt-exampleQt.$(OBJEXT) \
+@USE_QT5_TRUE@	exampleQt-moc_exampleQt.$(OBJEXT)
+exampleQt_OBJECTS = $(am_exampleQt_OBJECTS)
+exampleQt_LDADD = $(LDADD)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
+exampleQt_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(exampleQt_CXXFLAGS) \
+	$(CXXFLAGS) $(exampleQt_LDFLAGS) $(LDFLAGS) -o $@
+am__examplefl1_SOURCES_DIST = exampleFL.cpp
+@USE_FLTK_TRUE@am_examplefl1_OBJECTS = examplefl1-exampleFL.$(OBJEXT)
+examplefl1_OBJECTS = $(am_examplefl1_OBJECTS)
+examplefl1_DEPENDENCIES =
 examplefl1_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(examplefl1_CXXFLAGS) \
 	$(CXXFLAGS) $(examplefl1_LDFLAGS) $(LDFLAGS) -o $@
@@ -206,10 +214,12 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(examplefl1_SOURCES) $(examplegtkmm_SOURCES) \
-	$(testQt_SOURCES) $(testQt4_SOURCES) $(testfl1_SOURCES) \
-	$(testfl2_SOURCES) $(testgtkmm_SOURCES) $(testmath_SOURCES)
-DIST_SOURCES = $(am__examplefl1_SOURCES_DIST) \
+SOURCES = $(exampleQt_SOURCES) $(examplefl1_SOURCES) \
+	$(examplegtkmm_SOURCES) $(testQt_SOURCES) $(testQt4_SOURCES) \
+	$(testfl1_SOURCES) $(testfl2_SOURCES) $(testgtkmm_SOURCES) \
+	$(testmath_SOURCES)
+DIST_SOURCES = $(am__exampleQt_SOURCES_DIST) \
+	$(am__examplefl1_SOURCES_DIST) \
 	$(am__examplegtkmm_SOURCES_DIST) $(am__testQt_SOURCES_DIST) \
 	$(am__testQt4_SOURCES_DIST) $(am__testfl1_SOURCES_DIST) \
 	$(am__testfl2_SOURCES_DIST) $(am__testgtkmm_SOURCES_DIST) \
@@ -433,12 +443,15 @@ testmath_LDADD =
 @USE_QT4_TRUE@testQt4_SOURCES = testQt.cpp
 @USE_QT4_TRUE@testQt4_LDFLAGS = ../src/qt/libQarcball4.la 
 @USE_QT4_TRUE@testQt4_LDADD = 
-@USE_QT5_TRUE@testqt = testQt
+@USE_QT5_TRUE@testqt = testQt exampleQt
 @USE_QT5_TRUE@testQt_CXXFLAGS = @QT_CFLAGS@ -I../src/qt 
 @USE_QT5_TRUE@testQt_SOURCES = testQt.cpp
 @USE_QT5_TRUE@testQt_LDFLAGS = ../src/qt/libQarcball5.la 
 @USE_QT5_TRUE@testQt_LDADD = 
-noinst_HEADERS = draw_cube.h
+@USE_QT5_TRUE@exampleQt_CXXFLAGS = @QT_CFLAGS@ -I../src/qt 
+@USE_QT5_TRUE@exampleQt_SOURCES = exampleQt.cpp moc_exampleQt.cpp 
+@USE_QT5_TRUE@exampleQt_LDFLAGS = ../src/qt/libQarcball5.la 
+noinst_HEADERS = draw_cube.h exampleQt.h
 all: all-am
 
 .SUFFIXES:
@@ -482,6 +495,10 @@ clean-noinstPROGRAMS:
 	echo " rm -f" $$list; \
 	rm -f $$list
 
+exampleQt$(EXEEXT): $(exampleQt_OBJECTS) $(exampleQt_DEPENDENCIES) $(EXTRA_exampleQt_DEPENDENCIES) 
+	@rm -f exampleQt$(EXEEXT)
+	$(AM_V_CXXLD)$(exampleQt_LINK) $(exampleQt_OBJECTS) $(exampleQt_LDADD) $(LIBS)
+
 examplefl1$(EXEEXT): $(examplefl1_OBJECTS) $(examplefl1_DEPENDENCIES) $(EXTRA_examplefl1_DEPENDENCIES) 
 	@rm -f examplefl1$(EXEEXT)
 	$(AM_V_CXXLD)$(examplefl1_LINK) $(examplefl1_OBJECTS) $(examplefl1_LDADD) $(LIBS)
@@ -520,6 +537,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exampleQt-exampleQt.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/exampleQt-moc_exampleQt.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/examplefl1-exampleFL.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/examplegtkmm-exampleGtkmm.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/testQt-testQt.Po@am__quote@
@@ -549,6 +568,34 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='$<' object='$@' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
+
+exampleQt-exampleQt.o: exampleQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -MT exampleQt-exampleQt.o -MD -MP -MF $(DEPDIR)/exampleQt-exampleQt.Tpo -c -o exampleQt-exampleQt.o `test -f 'exampleQt.cpp' || echo '$(srcdir)/'`exampleQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/exampleQt-exampleQt.Tpo $(DEPDIR)/exampleQt-exampleQt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='exampleQt.cpp' object='exampleQt-exampleQt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -c -o exampleQt-exampleQt.o `test -f 'exampleQt.cpp' || echo '$(srcdir)/'`exampleQt.cpp
+
+exampleQt-exampleQt.obj: exampleQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -MT exampleQt-exampleQt.obj -MD -MP -MF $(DEPDIR)/exampleQt-exampleQt.Tpo -c -o exampleQt-exampleQt.obj `if test -f 'exampleQt.cpp'; then $(CYGPATH_W) 'exampleQt.cpp'; else $(CYGPATH_W) '$(srcdir)/exampleQt.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/exampleQt-exampleQt.Tpo $(DEPDIR)/exampleQt-exampleQt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='exampleQt.cpp' object='exampleQt-exampleQt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -c -o exampleQt-exampleQt.obj `if test -f 'exampleQt.cpp'; then $(CYGPATH_W) 'exampleQt.cpp'; else $(CYGPATH_W) '$(srcdir)/exampleQt.cpp'; fi`
+
+exampleQt-moc_exampleQt.o: moc_exampleQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -MT exampleQt-moc_exampleQt.o -MD -MP -MF $(DEPDIR)/exampleQt-moc_exampleQt.Tpo -c -o exampleQt-moc_exampleQt.o `test -f 'moc_exampleQt.cpp' || echo '$(srcdir)/'`moc_exampleQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/exampleQt-moc_exampleQt.Tpo $(DEPDIR)/exampleQt-moc_exampleQt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_exampleQt.cpp' object='exampleQt-moc_exampleQt.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -c -o exampleQt-moc_exampleQt.o `test -f 'moc_exampleQt.cpp' || echo '$(srcdir)/'`moc_exampleQt.cpp
+
+exampleQt-moc_exampleQt.obj: moc_exampleQt.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -MT exampleQt-moc_exampleQt.obj -MD -MP -MF $(DEPDIR)/exampleQt-moc_exampleQt.Tpo -c -o exampleQt-moc_exampleQt.obj `if test -f 'moc_exampleQt.cpp'; then $(CYGPATH_W) 'moc_exampleQt.cpp'; else $(CYGPATH_W) '$(srcdir)/moc_exampleQt.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/exampleQt-moc_exampleQt.Tpo $(DEPDIR)/exampleQt-moc_exampleQt.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_exampleQt.cpp' object='exampleQt-moc_exampleQt.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(exampleQt_CXXFLAGS) $(CXXFLAGS) -c -o exampleQt-moc_exampleQt.obj `if test -f 'moc_exampleQt.cpp'; then $(CYGPATH_W) 'moc_exampleQt.cpp'; else $(CYGPATH_W) '$(srcdir)/moc_exampleQt.cpp'; fi`
 
 examplefl1-exampleFL.o: exampleFL.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(examplefl1_CXXFLAGS) $(CXXFLAGS) -MT examplefl1-exampleFL.o -MD -MP -MF $(DEPDIR)/examplefl1-exampleFL.Tpo -c -o examplefl1-exampleFL.o `test -f 'exampleFL.cpp' || echo '$(srcdir)/'`exampleFL.cpp
@@ -894,6 +941,9 @@ uninstall-am:
 
 .PRECIOUS: Makefile
 
+
+@USE_QT5_TRUE@moc_exampleQt.cpp:exampleQt.h
+@USE_QT5_TRUE@	@MOC@ @MOC_ADD_OPT@ -o$@ $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(MOC_CPPFLAGS) exampleQt.h
 
 all: ${test_PROGRAMS}
 

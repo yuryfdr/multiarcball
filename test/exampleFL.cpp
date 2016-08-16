@@ -75,6 +75,7 @@ class testarc : public FlGlArcballWindow{
     static void cb_custom_view(Fl_Choice*w,testarc*p){
      int val = w->value();
      p->views3D((Views3D)(val+1));
+     p->redraw();
     }
 };
 

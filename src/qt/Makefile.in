@@ -133,12 +133,13 @@ am__installdirs = "$(DESTDIR)$(libdir)" \
 	"$(DESTDIR)$(libQarcball5_ladir)"
 LTLIBRARIES = $(lib_LTLIBRARIES)
 @USE_QT4_TRUE@libQarcball4_la_DEPENDENCIES = ../math/lib3dmath.la
-am__libQarcball4_la_SOURCES_DIST = moc_QArcballWidget4.cpp \
-	QArcballWidget.cpp
+am__libQarcball4_la_SOURCES_DIST = QArcballWidget.cpp
 @USE_QT4_TRUE@am_libQarcball4_la_OBJECTS =  \
-@USE_QT4_TRUE@	libQarcball4_la-moc_QArcballWidget4.lo \
 @USE_QT4_TRUE@	libQarcball4_la-QArcballWidget.lo
-libQarcball4_la_OBJECTS = $(am_libQarcball4_la_OBJECTS)
+@USE_QT4_TRUE@nodist_libQarcball4_la_OBJECTS =  \
+@USE_QT4_TRUE@	libQarcball4_la-moc_QArcballWidget4.lo
+libQarcball4_la_OBJECTS = $(am_libQarcball4_la_OBJECTS) \
+	$(nodist_libQarcball4_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
@@ -149,12 +150,13 @@ libQarcball4_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(libQarcball4_la_LDFLAGS) $(LDFLAGS) -o $@
 @USE_QT4_TRUE@am_libQarcball4_la_rpath = -rpath $(libdir)
 @USE_QT5_TRUE@libQarcball5_la_DEPENDENCIES = ../math/lib3dmath.la
-am__libQarcball5_la_SOURCES_DIST = moc_QArcballWidget5.cpp \
-	QArcballWidget.cpp
+am__libQarcball5_la_SOURCES_DIST = QArcballWidget.cpp
 @USE_QT5_TRUE@am_libQarcball5_la_OBJECTS =  \
-@USE_QT5_TRUE@	libQarcball5_la-moc_QArcballWidget5.lo \
 @USE_QT5_TRUE@	libQarcball5_la-QArcballWidget.lo
-libQarcball5_la_OBJECTS = $(am_libQarcball5_la_OBJECTS)
+@USE_QT5_TRUE@nodist_libQarcball5_la_OBJECTS =  \
+@USE_QT5_TRUE@	libQarcball5_la-moc_QArcballWidget5.lo
+libQarcball5_la_OBJECTS = $(am_libQarcball5_la_OBJECTS) \
+	$(nodist_libQarcball5_la_OBJECTS)
 libQarcball5_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) \
@@ -194,7 +196,8 @@ AM_V_CXXLD = $(am__v_CXXLD_@AM_V@)
 am__v_CXXLD_ = $(am__v_CXXLD_@AM_DEFAULT_V@)
 am__v_CXXLD_0 = @echo "  CXXLD   " $@;
 am__v_CXXLD_1 = 
-SOURCES = $(libQarcball4_la_SOURCES) $(libQarcball5_la_SOURCES)
+SOURCES = $(libQarcball4_la_SOURCES) $(nodist_libQarcball4_la_SOURCES) \
+	$(libQarcball5_la_SOURCES) $(nodist_libQarcball5_la_SOURCES)
 DIST_SOURCES = $(am__libQarcball4_la_SOURCES_DIST) \
 	$(am__libQarcball5_la_SOURCES_DIST)
 am__can_run_installinfo = \
@@ -385,7 +388,8 @@ top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I../math
 @USE_QT4_TRUE@QA4 = libQarcball4.la
 @USE_QT4_TRUE@libQarcball4_la_CXXFLAGS = @QT4_CFLAGS@ 
-@USE_QT4_TRUE@libQarcball4_la_SOURCES = moc_QArcballWidget4.cpp QArcballWidget.cpp 
+@USE_QT4_TRUE@nodist_libQarcball4_la_SOURCES = moc_QArcballWidget4.cpp
+@USE_QT4_TRUE@libQarcball4_la_SOURCES = QArcballWidget.cpp 
 @USE_QT4_TRUE@libQarcball4_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @QT4_LIBS@ -version-info @MA_LT_VERSION@ 
 @USE_QT4_TRUE@libQarcball4_la_LIBADD = ../math/lib3dmath.la 
 @USE_QT4_TRUE@libQarcball4_la_HEADERS = QArcballWidget.h
@@ -394,7 +398,8 @@ AM_CPPFLAGS = -I../math
 
 @USE_QT5_TRUE@QA5 = libQarcball5.la
 @USE_QT5_TRUE@libQarcball5_la_CXXFLAGS = @QT_CFLAGS@ 
-@USE_QT5_TRUE@libQarcball5_la_SOURCES = moc_QArcballWidget5.cpp QArcballWidget.cpp 
+@USE_QT5_TRUE@nodist_libQarcball5_la_SOURCES = moc_QArcballWidget5.cpp 
+@USE_QT5_TRUE@libQarcball5_la_SOURCES = QArcballWidget.cpp 
 @USE_QT5_TRUE@libQarcball5_la_LDFLAGS = @LTNOUNDEF@ @LIB_XCURSOR@ @QT_LIBS@ -version-info @MA_LT_VERSION@ 
 @USE_QT5_TRUE@libQarcball5_la_LIBADD = ../math/lib3dmath.la 
 @USE_QT5_TRUE@libQarcball5_la_HEADERS = QArcballWidget.h
@@ -509,13 +514,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LTCXXCOMPILE) -c -o $@ $<
 
-libQarcball4_la-moc_QArcballWidget4.lo: moc_QArcballWidget4.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball4_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball4_la-moc_QArcballWidget4.lo -MD -MP -MF $(DEPDIR)/libQarcball4_la-moc_QArcballWidget4.Tpo -c -o libQarcball4_la-moc_QArcballWidget4.lo `test -f 'moc_QArcballWidget4.cpp' || echo '$(srcdir)/'`moc_QArcballWidget4.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball4_la-moc_QArcballWidget4.Tpo $(DEPDIR)/libQarcball4_la-moc_QArcballWidget4.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_QArcballWidget4.cpp' object='libQarcball4_la-moc_QArcballWidget4.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball4_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball4_la-moc_QArcballWidget4.lo `test -f 'moc_QArcballWidget4.cpp' || echo '$(srcdir)/'`moc_QArcballWidget4.cpp
-
 libQarcball4_la-QArcballWidget.lo: QArcballWidget.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball4_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball4_la-QArcballWidget.lo -MD -MP -MF $(DEPDIR)/libQarcball4_la-QArcballWidget.Tpo -c -o libQarcball4_la-QArcballWidget.lo `test -f 'QArcballWidget.cpp' || echo '$(srcdir)/'`QArcballWidget.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball4_la-QArcballWidget.Tpo $(DEPDIR)/libQarcball4_la-QArcballWidget.Plo
@@ -523,12 +521,12 @@ libQarcball4_la-QArcballWidget.lo: QArcballWidget.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball4_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball4_la-QArcballWidget.lo `test -f 'QArcballWidget.cpp' || echo '$(srcdir)/'`QArcballWidget.cpp
 
-libQarcball5_la-moc_QArcballWidget5.lo: moc_QArcballWidget5.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball5_la-moc_QArcballWidget5.lo -MD -MP -MF $(DEPDIR)/libQarcball5_la-moc_QArcballWidget5.Tpo -c -o libQarcball5_la-moc_QArcballWidget5.lo `test -f 'moc_QArcballWidget5.cpp' || echo '$(srcdir)/'`moc_QArcballWidget5.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball5_la-moc_QArcballWidget5.Tpo $(DEPDIR)/libQarcball5_la-moc_QArcballWidget5.Plo
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_QArcballWidget5.cpp' object='libQarcball5_la-moc_QArcballWidget5.lo' libtool=yes @AMDEPBACKSLASH@
+libQarcball4_la-moc_QArcballWidget4.lo: moc_QArcballWidget4.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball4_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball4_la-moc_QArcballWidget4.lo -MD -MP -MF $(DEPDIR)/libQarcball4_la-moc_QArcballWidget4.Tpo -c -o libQarcball4_la-moc_QArcballWidget4.lo `test -f 'moc_QArcballWidget4.cpp' || echo '$(srcdir)/'`moc_QArcballWidget4.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball4_la-moc_QArcballWidget4.Tpo $(DEPDIR)/libQarcball4_la-moc_QArcballWidget4.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_QArcballWidget4.cpp' object='libQarcball4_la-moc_QArcballWidget4.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball5_la-moc_QArcballWidget5.lo `test -f 'moc_QArcballWidget5.cpp' || echo '$(srcdir)/'`moc_QArcballWidget5.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball4_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball4_la-moc_QArcballWidget4.lo `test -f 'moc_QArcballWidget4.cpp' || echo '$(srcdir)/'`moc_QArcballWidget4.cpp
 
 libQarcball5_la-QArcballWidget.lo: QArcballWidget.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball5_la-QArcballWidget.lo -MD -MP -MF $(DEPDIR)/libQarcball5_la-QArcballWidget.Tpo -c -o libQarcball5_la-QArcballWidget.lo `test -f 'QArcballWidget.cpp' || echo '$(srcdir)/'`QArcballWidget.cpp
@@ -536,6 +534,13 @@ libQarcball5_la-QArcballWidget.lo: QArcballWidget.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='QArcballWidget.cpp' object='libQarcball5_la-QArcballWidget.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball5_la-QArcballWidget.lo `test -f 'QArcballWidget.cpp' || echo '$(srcdir)/'`QArcballWidget.cpp
+
+libQarcball5_la-moc_QArcballWidget5.lo: moc_QArcballWidget5.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) -MT libQarcball5_la-moc_QArcballWidget5.lo -MD -MP -MF $(DEPDIR)/libQarcball5_la-moc_QArcballWidget5.Tpo -c -o libQarcball5_la-moc_QArcballWidget5.lo `test -f 'moc_QArcballWidget5.cpp' || echo '$(srcdir)/'`moc_QArcballWidget5.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libQarcball5_la-moc_QArcballWidget5.Tpo $(DEPDIR)/libQarcball5_la-moc_QArcballWidget5.Plo
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='moc_QArcballWidget5.cpp' object='libQarcball5_la-moc_QArcballWidget5.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libQarcball5_la_CXXFLAGS) $(CXXFLAGS) -c -o libQarcball5_la-moc_QArcballWidget5.lo `test -f 'moc_QArcballWidget5.cpp' || echo '$(srcdir)/'`moc_QArcballWidget5.cpp
 
 mostlyclean-libtool:
 	-rm -f *.lo
