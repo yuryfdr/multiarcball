@@ -1,4 +1,4 @@
-SUBDIRS=. src test vc
+SUBDIRS=. src test 
 
 if USE_FLTK
 flpc=multiarcball-FL.pc

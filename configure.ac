@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([multiarcball],0.3.3,[yfdrnchk at mail dot ru])
+AC_INIT([multiarcball],0.4.0,[yfdrnchk at mail dot ru])
 AC_CONFIG_SRCDIR([src/FLui/FlGlArcballWindow.h])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([config.h])
@@ -17,8 +17,8 @@ AC_CONFIG_HEADER([config.h])
 #  6. If any interfaces have been removed since the last public release,
 #     then set AGE to 0.
 
-MA_CURRENT=3
-MA_REVISION=0 
+MA_CURRENT=4
+MA_REVISION=0
 MA_AGE=0
 
 MA_LT_VERSION="$MA_CURRENT:$MA_REVISION:$MA_AGE"
@@ -244,7 +244,6 @@ AC_CONFIG_FILES([Makefile
                  src/math/Makefile
                  src/qt/Makefile
 		 test/Makefile
-		 vc/Makefile
 		 multiarcball.pc
 		 multiarcball-FL.pc
 		 multiarcball-fltk2.pc
