@@ -37,9 +37,9 @@ void paintGL(){
   //reshape();
   glPushMatrix();
   arcball_transform();
-  draw_axis();
+  //draw_axis();
   drawCube();
-  draw_3d_orbit();
+  //draw_3d_orbit();
   glPopMatrix();
   draw_zoom_frame();
 }

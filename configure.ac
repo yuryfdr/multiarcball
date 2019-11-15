@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.61)
-AC_INIT([multiarcball],0.3.2,[yfdrnchk at mail dot ru])
+AC_INIT([multiarcball],0.3.3,[yfdrnchk at mail dot ru])
 AC_CONFIG_SRCDIR([src/FLui/FlGlArcballWindow.h])
 AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([config.h])
@@ -17,12 +17,12 @@ AC_CONFIG_HEADER([config.h])
 #  6. If any interfaces have been removed since the last public release,
 #     then set AGE to 0.
 
-MA_CURRENT=2
-MA_REVISIN=1 
-MA_AGE=1
+MA_CURRENT=3
+MA_REVISION=0 
+MA_AGE=0
 
-#MA_LT_VERSION="MA_CURRENT:MA_REVISION:MA_AGE"
-MA_LT_VERSION="2:0:1"
+MA_LT_VERSION="$MA_CURRENT:$MA_REVISION:$MA_AGE"
+#MA_LT_VERSION="2:0:1"
 
 AC_SUBST(MA_LT_VERSION)
 
@@ -30,6 +30,7 @@ AC_SUBST(MA_LT_VERSION)
 AC_PROG_CXX
 AC_PROG_CC
 
+AX_CXX_COMPILE_STDCXX_11
 AC_LANG_CPLUSPLUS
 AC_LANG_COMPILER_REQUIRE
 
@@ -171,14 +172,13 @@ if test "x$enable_gtk" != xno; then
     PKG_CHECK_MODULES(SIGC, [sigc++-2.0 >= 2.6],
 	[CXX11REQ="-std=c++11"
 	AC_SUBST(CXX11REQ)],
-	[ PKG_CHECK_MODULES(SIGC, [sigc++-2.0 >= 2.4]) ]
+	[ PKG_CHECK_MODULES(SIGC, [sigc++-2.0 >= 2.2]) ]
     )
 
 fi
 
 AM_CONDITIONAL([USE_GTK],[test "x$HAVE_GTKMM" == x1])
 
-AC_ARG_ENABLE(qt4,[  --enable-qt4   build qt4 GUI part [default=no] ])
 AC_ARG_ENABLE(qt5,[  --enable-qt5   build qt5 GUI part [default=yes] ])
 AC_ARG_WITH(qt5-dir,[  --with-qt5-dir - path to Qt binary dir ])
 
@@ -186,12 +186,12 @@ HAVE_QT=0
 if test x"$enable_qt5" != xno ; then
     QT_REQ=5
     MOC_ADD_OPT=""
-    QT5_MODULE=Qt5OpenGL
+    QT5_MODULE="Qt5OpenGL"
     PKG_CHECK_MODULES(QT, [$QT5_MODULE], [HAVE_QT=1], [AC_MSG_WARN([Qt5widgets libraries not found.])])
-    HAVE_QT=`pkg-config --modversion $QT5_MODULE`
-    AC_SUBST(QT5_MODULE)
-    QT_CFLAGS+=" -fPIC "
     if test x"$HAVE_QT" != x0 ; then
+	HAVE_QT=`pkg-config --modversion $QT5_MODULE`
+	QT_CFLAGS+=" -fPIC "
+	AC_SUBST(QT5_MODULE)
 	AC_MSG_NOTICE([find Qt $HAVE_QT now search for suitable moc])
 	if test "x$with_qt_dir" != x ;then
 	    QT_DIR=$with_qt_dir
@@ -221,47 +221,9 @@ if test x"$enable_qt5" != xno ; then
 	AC_SUBST(MOC_ADD_OPT)
     fi
 fi
-HAVE_QT4=0
-if test x"$enable_qt4" != xno ; then
-    QT_REQ=4
-    MOC4_ADD_OPT=""
-    PKG_CHECK_MODULES(QT4, [QtOpenGL], [HAVE_QT4=1], [AC_MSG_WARN([QtOpenGL (4) libraries not found.])])
-    HAVE_QT4=`pkg-config --modversion QtOpenGL`
-#    QT4_CFLAGS+=" -fPIC "
-    if test x"$HAVE_QT4" != x0 ; then
-	AC_MSG_NOTICE([find Qt $HAVE_QT4 now search for suitable moc])
-	if test "x$with_qt_dir" != x ;then
-	    QT_DIR=$with_qt_dir
-	fi
-        AC_PATH_PROG(MOC4, [moc] ,[], [$QT_DIR:$PATH])
-        if test -z "$MOC4" ; then #|| test -z "$UIC" || test -z "$RCC"; then
-		AC_MSG_ERROR([Qt utility programs moc are required.])
-        fi
-	MOC4_VER="$($MOC4 -v 2>&1)"
-	case $MOC4_VER in
-	    *$HAVE_QT4*)
-	    AC_MSG_NOTICE([moc found $MOC4_VER])
-	;;
-	*)
-	    MOC4_VER="$($MOC4 --qt$QT_REQ -v 2>&1)"
-	    case $MOC4_VER in
-	    *$HAVE_QT4*)
-	    MOC4_ADD_OPT=" --qt$QT_REQ "
-	    ;;
-	    *)
-	    AC_MSG_ERROR([ $MOC4 version differ from Qt version $HAVE_QT4 try use --with-qt-dir])
-	    ;;
-	    esac
-	;;
-	esac
-	AC_SUBST(MOC4_ADD_OPT)
-    fi
-fi
 
 AC_SUBST(HAVE_QT)
-AC_SUBST(HAVE_QT4)
 AM_CONDITIONAL([USE_QT5],[test x"$HAVE_QT" != x0])
-AM_CONDITIONAL([USE_QT4],[test x"$HAVE_QT4" != x0])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL

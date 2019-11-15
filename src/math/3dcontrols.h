@@ -1,22 +1,22 @@
-/* 
+/*
    Copyright 2006-2009 by the Yury Fedorchenko.
-   
+
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-  
+
   You should have received a copy of the GNU Lesser General Public
   License along with main.c; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
-  
+
   Please report all bugs and problems to "yuryfdr@users.sourceforge.net".
-   
+
 */
 
 #ifndef _3_d_controls_h_
@@ -24,19 +24,11 @@
 
 #include "vmmath.h"
 
-#ifdef _MSC_VER
-#ifdef MA_DLL
-# define MA_API __declspec(dllexport)
-#else
-#  define MA_API __declspec(dllimport)
-#endif
-
-#include <windows.h>
-
-#else
 #  define MA_API
+#ifdef _MSC_VER
+#include <WinSock2.h>
+#include <windows.h>
 #endif
-
 
 #include <GL/gl.h>
 namespace controls3d{
@@ -53,7 +45,7 @@ namespace controls3d{
   }
   inline MATRIX4x4 translation(const XYZ& t){
     return translation(t.x,t.y,t.z);
-  };
+  }
   // rotation matrixes angle in radians
   inline MATRIX4x4 rotation_x(double angle){
     MATRIX4x4 rotmat;
@@ -109,11 +101,11 @@ namespace controls3d{
     /**
      * Combining transformation and matrix.
      * Post-multiply with given matrix.
-     */  
+     */
     void operator *= (const MATRIX4x4& mat) {
       transform *= mat;
     }
-    /** 
+    /**
      * Pre-multiply with given transformation/matrix
      * The operator chosen is not the most intuitive, but the only one that makes
      * some kind of sense
@@ -121,7 +113,7 @@ namespace controls3d{
     void operator /= (const Transformation& tr) {
       transform = tr.transform * transform;
     }
-    /** 
+    /**
      * Pre-multiply with given FTransformation/matrix
      * The operator chosen is not the most intuitive, but the only one that makes
      * some kind of sense.
@@ -129,19 +121,19 @@ namespace controls3d{
     void operator /= (const MATRIX4x4& mat) {
       transform = mat * transform;
     }
-    
+
     Transformation operator * (const Transformation& tr) {
       Transformation newtr(*this);
       newtr *= tr;
       return newtr;
     }
-    
+
     Transformation operator * (const MATRIX4x4& mat) {
       Transformation newtr(*this);
       newtr *= mat;
       return newtr;
     }
-    
+
     friend Transformation operator * (const MATRIX4x4& mat, const Transformation& tr) {
       Transformation newtr(mat);
       newtr *= tr;
@@ -177,13 +169,13 @@ namespace controls3d{
     }
 /*    void rotate (double angle,double x, double y, double z){
       quaternion qt(XYZ(x, y, z), angle);
-      rotate(qt); 
+      rotate(qt);
     }
     void rotate (double angle,const XYZ& vect){
       quaternion qt(vect, angle);;
-      rotate(qt); 
+      rotate(qt);
     }*/
-    
+
     void scale (const XYZ& s) {
       transform = scaling(s.x,s.y,s.z) * transform;
     }
@@ -199,7 +191,7 @@ namespace controls3d{
 /*    void post_translate (double tx, double ty, double tz) {
       transform *= translation(tx,ty,tz);
     }*/
-    
+
     void post_rotate_x (double angle) {
       transform *= rotation_x(angle);
     }
@@ -215,7 +207,7 @@ namespace controls3d{
     void post_rotate (const Quaternion& quat) {
       transform *= quat.to_matrix4();
     }
-    
+
     void post_scale (const XYZ& s) {
       transform *= scaling(s);
     }
@@ -229,6 +221,9 @@ namespace controls3d{
       double mat[16];
       transform.fill_array_column_major(mat);
       glMultMatrixd(mat);
+    }
+    void fill_array_column_major(double* mat)const {
+      transform.fill_array_column_major(mat);
     }
     /**
      * Get the Transformation matrix.
@@ -248,7 +243,7 @@ namespace controls3d{
     void set (const MATRIX4x4 mat) {
       transform = mat;
     }
-  
+
   };
   enum TransformsType { NoTransform=0, Pan=1, Rotate=2, Zoom=3, Dolly=4 };
   //basic controller class
@@ -295,10 +290,10 @@ namespace controls3d{
         double fact = 1 + fabs (diff);
         if ( diff < 0.0 ) zNow /= fact;
         else zNow *= fact;
-      
+
         // All 3 coordinates of the zoom FVector are changed to get proper
         // view scaling (rotate after zoom, etc.)
-      
+
         // Fill in transposed order for GL
         mtrx[0][0] = zNow[0];
         mtrx[1][1] = zNow[1];
@@ -402,7 +397,7 @@ namespace controls3d{
     //
     AxisSet axis()const{return asAxisSet;}
     int axis_index()const{return iAxisIndex;}
-    
+
   };
   //for arcball
   XYZ MA_API mouseOnSphere(const XYZ& mouse, const XYZ& ballCenter, double ballRadius);

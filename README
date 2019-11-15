@@ -1,6 +1,6 @@
 multiarcball - multiple GUI toolkit trackball library.
 
-it now supports gtkmm (use gtkglextmm ), fltk-1.x, fltk-2 (deprecated) and Qt (5 or 4)
+it now supports gtkmm (use gtkglextmm ), fltk-1.x, fltk-2 (deprecated) and Qt5
 
 notes for MSVC 
 

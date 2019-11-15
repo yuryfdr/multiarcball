@@ -72,19 +72,6 @@ testmath_LDFLAGS =
 testmath_LDADD = 
 
 
-if USE_QT4
-testqt4 = testQt4
-
-testQt4_CXXFLAGS =  @QT4_CFLAGS@ -I../src/qt 
-
-testQt4_SOURCES = testQt.cpp
-
-testQt4_LDFLAGS = ../src/qt/libQarcball4.la 
-
-testQt4_LDADD =
-
-
-endif
 if USE_QT5
 testqt = testQt exampleQt
 

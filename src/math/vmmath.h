@@ -1,22 +1,22 @@
-/* 
+/*
    Copyright 2004-2009 by the Yury Fedorchenko.
-   
+
   This program is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
   version 2.1 of the License, or (at your option) any later version.
-  
+
   This program is distributed in the hope that it will be useful,
   but WITHOUT ANY WARRANTY; without even the implied warranty of
   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
   Lesser General Public License for more details.
-  
+
   You should have received a copy of the GNU Lesser General Public
   License along with main.c; if not, write to the Free Software
   Foundation, Inc., 51 Franklin Street, Fifth Floor Boston, MA 02110-1301,  USA
-  
+
   Please report all bugs and problems to "yuryfdr@users.sourceforge.net".
-   
+
 */
 #ifndef _math_vectors_h_
 #define _math_vectors_h_
@@ -44,7 +44,7 @@
 #if defined(__CUDA_ARCH__)
 #define HD_API __device__ __host__
 #else
-#define HD_API 
+#define HD_API
 #endif
 
 namespace mvct{
@@ -75,7 +75,7 @@ inline int cofsign (unsigned int i,unsigned int j) {
 
 
 /**
-  vector 2D 
+  vector 2D
 */
 class XY
 {
@@ -110,7 +110,7 @@ public:
 };
 
 /**
-  vector 3D 
+  vector 3D
 */
 class XYZ : public XY
 {
@@ -125,13 +125,13 @@ public:
   //<|XYZ|
   HD_API double abs () const{
 #ifndef __GCCXML__
-  return sqrt (x * x + y * y + z * z); 
-#endif  
+  return sqrt (x * x + y * y + z * z);
+#endif
   };
   //<|XYZ|^2
-  HD_API double abs2 () const{return (x * x + y * y + z * z); };
-  // vector multiplication !!!! note it has lower Precedence that + and - use () 
-  HD_API XYZ operator ^ (const XYZ & v) const{ return XYZ (y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);};
+  HD_API double abs2 () const{return (x * x + y * y + z * z); }
+  // vector multiplication !!!! note it has lower Precedence that + and - use ()
+  HD_API XYZ operator ^ (const XYZ & v) const{ return XYZ (y * v.z - z * v.y, z * v.x - x * v.z, x * v.y - y * v.x);}
   // scalar
   HD_API double operator * (const XYZ & v) const{return (x * v.x + y * v.y + z * v.z);};
   //
@@ -157,10 +157,10 @@ public:
   //
   void set(double a,double b,double c){x=a,y=b,z=c;}
   void set(double a){x=y=z=a;}
-  void reset(){set(0.);} 
+  void reset(){set(0.);}
   double& operator [](size_t i){return reinterpret_cast<double*>(this)[i];}
   const double& operator [](size_t i)const{return reinterpret_cast<const double*>(this)[i];}
-  void get(double&a,double&b,double&c)const{a=x,b=y,c=z;} 
+  void get(double&a,double&b,double&c)const{a=x,b=y,c=z;}
 //
 #if !defined(__GCCXML__) && defined(HAVE_TAO_ORB_H) && !defined(__CUDA_ARCH__)
   operator CFD::XYZ(){CFD::XYZ a; a.x=x;  a.y=y;  a.z=z; return a;};
@@ -172,23 +172,24 @@ public:
   double w;
   HD_API XYZ_w():XYZ(),w(0){}
   HD_API XYZ_w(const XYZ & xyz):XYZ(xyz),w(0){}
+  HD_API XYZ_w(const XYZ & xyz,double _w):XYZ(xyz),w(_w){}
   HD_API XYZ_w(double X, double Y, double Z,double W):XYZ(X,Y,Z),w (W){}
   HD_API XYZ_w& operator=(const XYZ & xyz){this->XYZ::operator=(xyz),w=0;return *this;}
   //
   HD_API void set(double a,double b,double c,double d){x=a,y=b,z=c,w=d;}
   HD_API void set(double a){x=y=z=w=a;}
-  HD_API void get(double&a,double&b,double&c,double&d)const{a=x,b=y,c=z,d=w;} 
+  HD_API void get(double&a,double&b,double&c,double&d)const{a=x,b=y,c=z,d=w;}
   //
-  HD_API double operator * (const XYZ_w & v) const{return (x*v.x + y*v.y + z*v.z + w*v.w);};
-  HD_API XYZ_w operator * (const double &d) const {return XYZ_w (x * d, y * d, z * d,w*d);};
-  HD_API XYZ_w operator / (const double &d) const {return XYZ_w (x / d, y / d, z / d,w/d);};
-  HD_API XYZ_w operator *= (const double &d){ x *= d; y *= d;z *= d;w*=d; return *this; };
-  HD_API XYZ_w operator /= (const double &d){ x /= d; y /= d;z /= d;w/=d; return *this; };
+  HD_API double operator * (const XYZ_w & v) const{return (x*v.x + y*v.y + z*v.z + w*v.w);}
+  HD_API XYZ_w operator * (const double &d) const {return XYZ_w (x * d, y * d, z * d,w*d);}
+  HD_API XYZ_w operator / (const double &d) const {return XYZ_w (x / d, y / d, z / d,w/d);}
+  HD_API XYZ_w operator *= (const double &d){ x *= d; y *= d;z *= d;w*=d; return *this; }
+  HD_API XYZ_w operator /= (const double &d){ x /= d; y /= d;z /= d;w/=d; return *this; }
 
-  HD_API XYZ_w operator - (const XYZ_w & v) const{return XYZ_w (x - v.x, y - v.y, z - v.z,w - v.w);};
-  HD_API XYZ_w operator + (const XYZ_w & v) const{return XYZ_w (x + v.x, y + v.y, z + v.z,w + v.w);};
-  HD_API XYZ_w & operator -= (const XYZ_w & v) {x -= v.x; y -= v.y;z -= v.z;w -= v.w; return *this; };
-  HD_API XYZ_w & operator += (const XYZ_w & v) {x += v.x; y += v.y;z += v.z;w += v.w; return *this; };
+  HD_API XYZ_w operator - (const XYZ_w & v) const{return XYZ_w (x - v.x, y - v.y, z - v.z,w - v.w);}
+  HD_API XYZ_w operator + (const XYZ_w & v) const{return XYZ_w (x + v.x, y + v.y, z + v.z,w + v.w);}
+  HD_API XYZ_w & operator -= (const XYZ_w & v) {x -= v.x; y -= v.y;z -= v.z;w -= v.w; return *this; }
+  HD_API XYZ_w & operator += (const XYZ_w & v) {x += v.x; y += v.y;z += v.z;w += v.w; return *this; }
 
 };
 //scale
@@ -246,66 +247,66 @@ public:
   void transpose(){
 #ifndef __GCCXML__
     for(int i=0; i < 3; ++i)
-	    for(int j=i+1; j < 3; ++j)std::swap(row[i][j],row[j][i]);
-#endif	    
+      for(int j=i+1; j < 3; ++j)std::swap(row[i][j],row[j][i]);
+#endif
   }
-  void invert()throw(SingularM){
+  void invert()noexcept(false){
 #ifndef __GCCXML__
     XYZ inv[3];
     int i,j,swaprow;
     for (i=0; i<3; ++i)inv[i][i] = 1.0;
       // inv will be identity initially and will become the inverse at the end
     for (i=0; i < 3; ++i){
-	    // i is column
-	    // Find row in this column which has largest element (magnitude)
-	    swaprow = i;
-	    for (j=i+1; j < 3; ++j)
-	      if ( fabs (row[j][i]) > fabs (row[i][i]) ) swaprow = j;
-	  
-	    if ( swaprow != i ){
-	      // Swap the two rows to get largest element in main diagonal
-	      // Do this for the RHS also
-	      std::swap (row[i],row[swaprow]); 
-	      std::swap (inv[i],inv[swaprow]);
-	    }
-	    // Check if pivot is non-zero
-	    if ( !is_non_zero(row[i][i]) ){
+      // i is column
+      // Find row in this column which has largest element (magnitude)
+      swaprow = i;
+      for (j=i+1; j < 3; ++j)
+        if ( fabs (row[j][i]) > fabs (row[i][i]) ) swaprow = j;
+
+      if ( swaprow != i ){
+        // Swap the two rows to get largest element in main diagonal
+        // Do this for the RHS also
+        std::swap (row[i],row[swaprow]);
+        std::swap (inv[i],inv[swaprow]);
+      }
+      // Check if pivot is non-zero
+      if ( !is_non_zero(row[i][i]) ){
         throw(SingularM());
       }
-	    // Divide matrix by main diagonal element to make it 1.0
-	    double fact = row[i][i];
-	    for (j=0; j < 3; ++j){
-	      row[j] /= fact;
-	      inv[j] /= fact;
-	    }
-	    // Make non-main-diagonal elements in this column 0 using main-diagonal row
-	    for (j=0; j < 3; ++j){
-	      if ( j != i ){
-		      double temp = row[j][i];
-		      row[j] -= row[i]*temp;
-		      inv[j] -= inv[i]*temp;
-		    }
-	    }
-	  }
+      // Divide matrix by main diagonal element to make it 1.0
+      double fact = row[i][i];
+      for (j=0; j < 3; ++j){
+        row[j] /= fact;
+        inv[j] /= fact;
+      }
+      // Make non-main-diagonal elements in this column 0 using main-diagonal row
+      for (j=0; j < 3; ++j){
+        if ( j != i ){
+          double temp = row[j][i];
+          row[j] -= row[i]*temp;
+          inv[j] -= inv[i]*temp;
+        }
+      }
+    }
     // Main-diagonal elements on LHS may not be 1.0 now. Divide to make LHS identity
     // Last row will be 1.0
     for (i=0; i < 2; ++i){
-	    double pivot = row[i][i];
-	    row[i] /= pivot;
-	    inv[i] /= pivot;
-	  }
+      double pivot = row[i][i];
+      row[i] /= pivot;
+      inv[i] /= pivot;
+    }
     for (i=0; i < 3; ++i)row[i] = inv[i];
 #endif
   }
   // return matrix determinant
   double determinant(){
     double det = 0.0;
-    det =   row[0][0] * row[1][1] * row[2][2] 
-	        + row[0][1] * row[1][2] * row[2][0] 
-	        + row[0][2] * row[1][0] * row[2][1] 
-	        - row[2][0] * row[1][1] * row[0][2] 
-	        - row[2][1] * row[1][2] * row[0][0] 
-	        - row[2][2] * row[1][0] * row[0][1];
+    det =   row[0][0] * row[1][1] * row[2][2]
+          + row[0][1] * row[1][2] * row[2][0]
+          + row[0][2] * row[1][0] * row[2][1]
+          - row[2][0] * row[1][1] * row[0][2]
+          - row[2][1] * row[1][2] * row[0][0]
+          - row[2][2] * row[1][0] * row[0][1];
     return det;
   }
 
@@ -339,12 +340,12 @@ public:
   XYZ_w& operator[](size_t i){return row[i];}
   const XYZ_w& operator[](size_t i)const{return row[i];}
 //
-  XYZ operator *(const XYZ&v)const{ 
+  XYZ operator *(const XYZ&v)const{
         return XYZ(row[0].x*v.x+row[0].y*v.y+row[0].z*v.z+row[0].w,
         row[1].x*v.x+row[1].y*v.y+row[1].z*v.z+row[1].w,
         row[2].x*v.x+row[2].y*v.y+row[2].z*v.z+row[2].w);
   }
-  XYZ mul_as3(const XYZ&v)const{ 
+  XYZ mul_as3(const XYZ&v)const{
         return XYZ(row[0].x*v.x+row[0].y*v.y+row[0].z*v.z,
         row[1].x*v.x+row[1].y*v.y+row[1].z*v.z,
         row[2].x*v.x+row[2].y*v.y+row[2].z*v.z);
@@ -355,49 +356,49 @@ public:
     return *this=(*this)*mat;
   }
 //
-  void invert(void)throw(SingularM){
+  void invert(void)noexcept(false){
 #ifndef __GCCXML__
     XYZ_w inv[4];
     int i,j,swaprow;
     for (i=0; i < 4; ++i)inv[i][i] = 1.0;
     // inv will be identity initially and will become the inverse at the end
     for (i=0; i < 4; ++i){
-	    // i is column
-	    // Find row in this column which has largest element (magnitude)
-	    swaprow = i;
-	    for (j=i+1; j < 4; ++j)
-	      if ( fabs (row[j][i]) > fabs (row[i][i]) ) swaprow = j;
-	    if ( swaprow != i ){
-	      // Swap the two rows to get largest element in main diagonal
-	      // Do this for the RHS also
-	      std::swap(row[i],row[swaprow]);std::swap (inv[i], inv[swaprow]);
-	    }
-	    // Check if pivot is non-zero
-	    if ( !is_non_zero (row[i][i]) ){
+      // i is column
+      // Find row in this column which has largest element (magnitude)
+      swaprow = i;
+      for (j=i+1; j < 4; ++j)
+        if ( fabs (row[j][i]) > fabs (row[i][i]) ) swaprow = j;
+      if ( swaprow != i ){
+        // Swap the two rows to get largest element in main diagonal
+        // Do this for the RHS also
+        std::swap(row[i],row[swaprow]);std::swap (inv[i], inv[swaprow]);
+      }
+      // Check if pivot is non-zero
+      if ( !is_non_zero (row[i][i]) ){
         throw(SingularM());//cerr << "FMatrix4x4 inverse(const FMatrix4x4&) : Singular matrix!" << endl;	      // Return original matrix without change	      return;
       }
-	    // Divide matrix by main diagonal element to make it 1.0
-	    double fact = row[i][i];
-	    for(j=0; j < 4; ++j){
-	      row[j] /= fact;
-	      inv[j] /= fact;
-	    }
-	    // Make non-main-diagonal elements in this column 0 using main-diagonal row
-	    for(j=0; j < 4; ++j){
+      // Divide matrix by main diagonal element to make it 1.0
+      double fact = row[i][i];
+      for(j=0; j < 4; ++j){
+        row[j] /= fact;
+        inv[j] /= fact;
+      }
+      // Make non-main-diagonal elements in this column 0 using main-diagonal row
+      for(j=0; j < 4; ++j){
         if ( j != i ){
           double temp = row[j][i];
           row[j] -= row[i]*temp;
           inv[j] -= inv[i]*temp;
         }
-	    }
-	  }
+      }
+    }
     // Main-diagonal elements on LHS may not be 1.0 now. Divide to make LHS identity
     // Last row will be 1.0
     for (i=0; i < 3; ++i){
-	    double pivot = row[i][i];
-	    row[i] /= pivot;
-	    inv[i] /= pivot;
-	  }
+      double pivot = row[i][i];
+      row[i] /= pivot;
+      inv[i] /= pivot;
+    }
     for (i=0; i < 4; ++i)row[i] = inv[i];
 #endif
   }
@@ -405,7 +406,7 @@ public:
   void transpose(){
 #ifndef __GCCXML__
     for(int i=0; i < 4; ++i)
-	    for(int j=i+1; j < 4; ++j)std::swap(row[i][j],row[j][i]);
+      for(int j=i+1; j < 4; ++j)std::swap(row[i][j],row[j][i]);
 #endif
   }
 #ifndef __GCCXML__
@@ -422,43 +423,43 @@ public:
     int index=0;
     for(int i=0; i < 4; ++i){
       row[i].get (array[index],array[index+1],array[index+2],array[index+3]);
-	    index += 4;
-	  }
+      index += 4;
+    }
   }
   /**
    * Fill an array with contents of the matrix
-   * Row - major form -> Column 1 == { array[0], array[1], array[2], array[3] }  
+   * Row - major form -> Column 1 == { array[0], array[1], array[2], array[3] }
    */
   void fill_array_column_major (double array[16]) const{
     int index=0;
     for (int i=0; i < 4; ++i){
-	    row[i].get(array[index],array[index+4],array[index+8],array[index+12]);
-	    index += 1;
-	  }
+      row[i].get(array[index],array[index+4],array[index+8],array[index+12]);
+      index += 1;
+    }
   }
   ///cofactor
   MATRIX3x3 cofactor(int r, int c) const {
     MATRIX3x3 cof;
     XYZ cofrow;
     int cfcol, cfrow;
-      
+
     cfrow = 0;
     for (int i=0; i < 4; ++i){
-	    if ( i != r ){
-	      cfcol = 0;
-	      for (int j=0; j < 4; ++j)
-		      if ( j != c ) cofrow[cfcol++] = row[i][j];
-	        cof[cfrow++] = cofrow;
-	    }
-	  }
+      if ( i != r ){
+        cfcol = 0;
+        for (int j=0; j < 4; ++j)
+          if ( j != c ) cofrow[cfcol++] = row[i][j];
+          cof[cfrow++] = cofrow;
+      }
+    }
     return cof;
   }
-    
+
   double determinant()const{
     double det = 0.0;
-      
+
     for (int i=0; i < 4; ++i)
-	    det += row[0][i] * cofsign (0, i) * cofactor(0, i).determinant();
+      det += row[0][i] * cofsign (0, i) * cofactor(0, i).determinant();
     return det;
   }
 
@@ -470,9 +471,9 @@ public:
 };
 
 class Quaternion{
+  public:
   XYZ v;
   double w;
-public:
   Quaternion():v(),w(1.0){}
   Quaternion(const XYZ& vv,const double ww):v(vv),w(ww){}
   Quaternion(const double ang,const XYZ& ax){
@@ -516,7 +517,7 @@ public:
   void reset(){v=XYZ();w=1;}
 #ifndef __GCCXML__
   friend Quaternion conjugate(const Quaternion& quat){
-    return Quaternion(-quat.v,quat.w);
+    return Quaternion(quat.v,-quat.w);
   }
 #endif
   void set_axis_and_angle(const XYZ& axis, double theta){
@@ -526,7 +527,7 @@ public:
     v *= sin(theta/2.0);
 #endif
   }
-
+  friend std::ostream& operator<<(std::ostream& o,const Quaternion& mat);
 };
 
 #ifndef __GCCXML__
@@ -589,7 +590,7 @@ inline XYZ operator * (const XYZ& vec, const MATRIX3x3& mat)
 }
 inline std::ostream& operator<<(std::ostream& o,const XYZ_w& v){
   o.setf(std::ios_base::floatfield,std::ios_base::scientific);
-  o<<std::setprecision(16)<<v.x<<'\t'<<v.y<<'\t'<<v.z<<'\t'<<v.w;
+  o<<std::setprecision(16)<<v.x<<' '<<v.y<<' '<<v.z<<' '<<v.w;
   return o;
 }
 inline std::istream& operator>>(std::istream& o,XYZ_w& v){
@@ -603,6 +604,10 @@ inline std::ostream& operator<<(std::ostream& o,const MATRIX4x4& mat){
 }
 inline std::istream& operator>>(std::istream& o,MATRIX4x4& mat){
   for(int i=0;i<4;++i)o>>mat.row[i];
+  return o;
+}
+inline std::ostream& operator<<(std::ostream& o,const Quaternion& mat){
+  o<<mat.v<<' '<<mat.w;
   return o;
 }
 #endif //__GCCXML__
