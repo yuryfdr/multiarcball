@@ -1,5 +1,6 @@
 15.11.2019
     - drop Qt4 support
+    - begin cmake migration
 27.06.2016
     - v 0.3.2
     - more qt enhansment
