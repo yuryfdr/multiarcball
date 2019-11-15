@@ -99,4 +99,6 @@ noinst_PROGRAMS= ${testmath} ${testfl} ${testfl1ex} ${testfltk} ${testmm} ${exmm
 
 noinst_HEADERS= draw_cube.h exampleQt.h
 
+EXTRA_DIST=$(noinst_DATA) CMakeLists.txt
+
 all: ${test_PROGRAMS}

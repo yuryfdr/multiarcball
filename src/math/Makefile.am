@@ -19,3 +19,4 @@ lib3dmath_la_HEADERS = 3dcontrols.h\
 lib3dmath_ladir = \
 	$(pkgincludedir)
 
+EXTRA_DIST=$(noinst_DATA) CMakeLists.txt

@@ -24,4 +24,4 @@ multiarcball_docdir = $(docdir)
 multiarcball_doc_DATA= doc/eventsmap.html \
 		doc/fivepercent.png
 
-EXTRA_DIST = $(multiarcball_doc_DATA) $(noinst_DATA)
+EXTRA_DIST = $(multiarcball_doc_DATA) $(noinst_DATA) CMakeLists.txt

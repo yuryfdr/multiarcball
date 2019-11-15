@@ -381,6 +381,7 @@ AM_CPPFLAGS = -I../math
 @USE_FLTK_TRUE@	$(pkgincludedir)/FL
 
 @USE_FLTK_TRUE@noinst_HEADERS = ../flcursors/fltk1/Fl_Custom_Cursor.H
+EXTRA_DIST = $(noinst_DATA) CMakeLists.txt
 all: all-am
 
 .SUFFIXES:

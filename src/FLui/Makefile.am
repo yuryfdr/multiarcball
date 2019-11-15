@@ -26,3 +26,5 @@ libFLarcball_ladir = \
 noinst_HEADERS = ../flcursors/fltk1/Fl_Custom_Cursor.H
 
 endif
+
+EXTRA_DIST=$(noinst_DATA) CMakeLists.txt

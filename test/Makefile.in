@@ -441,6 +441,7 @@ testmath_LDADD =
 @USE_QT5_TRUE@exampleQt_SOURCES = exampleQt.cpp moc_exampleQt.cpp 
 @USE_QT5_TRUE@exampleQt_LDFLAGS = ../src/qt/libQarcball5.la 
 noinst_HEADERS = draw_cube.h exampleQt.h
+EXTRA_DIST = $(noinst_DATA) CMakeLists.txt
 all: all-am
 
 .SUFFIXES:

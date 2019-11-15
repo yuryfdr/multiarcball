@@ -9,4 +9,4 @@ noinst_DATA=\
   data/zoom.xpm\
   data/zoom_w.xpm
 
-EXTRA_DIST=$(noinst_DATA)
+EXTRA_DIST=$(noinst_DATA) CMakeLists.txt
