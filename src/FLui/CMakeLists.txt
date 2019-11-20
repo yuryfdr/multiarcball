@@ -8,7 +8,11 @@ include_directories(
 set(SOURCES
 FlGlArcballWindow.cpp
 )
-add_library(${PROJECT_NAME} SHARED ${SOURCES})
+set(HEADERS
+FlGlArcballWindow.h
+)
+add_definitions(-DFL_DLL)
+add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
 add_dependencies(${PROJECT_NAME} 3dmath)
 
 target_link_libraries(${PROJECT_NAME} 3dmath ${FLTK_LIBRARY})
@@ -16,8 +20,11 @@ target_link_options(${PROJECT_NAME} PUBLIC "LINKER:--as-needed")
 
 install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION bin
+    ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
 )
+install(FILES ${HEADERS} DESTINATION include/multiarcball)
+
 set_target_properties(
     ${PROJECT_NAME}
     PROPERTIES
