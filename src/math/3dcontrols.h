@@ -24,10 +24,16 @@
 
 #include "vmmath.h"
 
-#  define MA_API
 #ifdef _MSC_VER
+#ifdef _3dmath_EXPORTS
+# define MA_API __declspec(dllexport)
+#else
+#  define MA_API __declspec(dllimport)
+#endif
 #include <WinSock2.h>
 #include <windows.h>
+#else
+#define MA_API
 #endif
 
 #include <GL/gl.h>

@@ -24,7 +24,7 @@
 #define _FL_GL_MARCBALL_WINDOW_H_
 
 #ifdef _MSC_VER
-#ifdef FLMA_DLL
+#ifdef FLarcball_EXPORTS
 #  define FLMA_API __declspec(dllexport)
 #else
 #  define FLMA_API __declspec(dllimport)
