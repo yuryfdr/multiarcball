@@ -30,5 +30,7 @@ endif(WITH_GTK)
 set(PACKAGE_VERSION 0.4)
 set(PACKAGE_FULL_VERSION 0.4.0)
 
+include(GNUInstallDirs)
+
 add_subdirectory(src)
 add_subdirectory(test)
