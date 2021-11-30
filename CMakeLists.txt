@@ -5,7 +5,7 @@ option(WITH_FLTK "enable GUI fltk" ON)
 option(WITH_GTK "enable GUI fltk" OFF)
 
 if(WITH_FLTK)
-	if(WIN32)
+	if(WIN32 AND NOT MINGW)
 		set(FLTK_SKIP_FLUID TRUE)
 		set(FLTK_SKIP_FORMS TRUE)
 		set(FLTK_SKIP_IMAGES TRUE)
