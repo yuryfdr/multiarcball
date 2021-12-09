@@ -1,11 +1,11 @@
 
-AM_CPPFLAGS = -I../src/math
+AM_CPPFLAGS = -I${top_srcdir}/src/math
 
 if USE_FLTK 
 
 testfl = testfl1
 
-testfl1_CXXFLAGS =  @FL_CXXFLAGS@ -I../src/FLui
+testfl1_CXXFLAGS =  @FL_CXXFLAGS@ -I${top_srcdir}/src/FLui
 
 testfl1_SOURCES = testFL.cpp
 
@@ -15,7 +15,7 @@ testfl1_LDADD =
 
 testfl1ex = examplefl1
 
-examplefl1_CXXFLAGS =  @FL_CXXFLAGS@ -I../src/FLui
+examplefl1_CXXFLAGS =  @FL_CXXFLAGS@ -I${top_srcdir}/src/FLui
 
 examplefl1_SOURCES = exampleFL.cpp
 
@@ -27,7 +27,7 @@ endif
 if USE_FLTK2
 testfltk = testfl2
 
-testfl2_CXXFLAGS =  @FL2_CXXFLAGS@ -I../src/fltkui
+testfl2_CXXFLAGS =  @FL2_CXXFLAGS@ -I${top_srcdir}/src/fltkui
 
 testfl2_SOURCES = testFL2.cpp
 
@@ -41,7 +41,7 @@ if USE_GTK
 
 testmm = testgtkmm
 
-testgtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I../src/gtkmmui @CXX11REQ@
+testgtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I${top_srcdir}/src/gtkmmui @CXX11REQ@
 
 testgtkmm_SOURCES = testGtkmm.cxx
 
@@ -51,7 +51,7 @@ testgtkmm_LDADD =
 
 exmm = examplegtkmm
 
-examplegtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I../src/gtkmmui @CXX11REQ@
+examplegtkmm_CXXFLAGS =   @GTKGLEXTMM_CFLAGS@ -I${top_srcdir}/src/gtkmmui @CXX11REQ@
 
 examplegtkmm_SOURCES = exampleGtkmm.cxx
 
@@ -75,7 +75,7 @@ testmath_LDADD =
 if USE_QT5
 testqt = testQt exampleQt
 
-testQt_CXXFLAGS =  @QT_CFLAGS@ -I../src/qt 
+testQt_CXXFLAGS =  @QT_CFLAGS@ -I${top_srcdir}/src/qt
 
 testQt_SOURCES = testQt.cpp
 
@@ -83,7 +83,7 @@ testQt_LDFLAGS = ../src/qt/libQarcball5.la
 
 testQt_LDADD =
 
-exampleQt_CXXFLAGS =  @QT_CFLAGS@ -I../src/qt 
+exampleQt_CXXFLAGS =  @QT_CFLAGS@ -I${top_srcdir}/src/qt
 
 exampleQt_SOURCES = exampleQt.cpp moc_exampleQt.cpp 
 

@@ -10,7 +10,7 @@ endif
 
 lib_LTLIBRARIES = libFLarcball.la
 
-libFLarcball_la_CXXFLAGS =  @FL_CXXFLAGS@ $(CURDEF)
+libFLarcball_la_CXXFLAGS =  @FL_CXXFLAGS@ $(CURDEF) -I${top_srcdir}/src/math
 
 libFLarcball_la_SOURCES = FlGlArcballWindow.cpp $(CURSSRC)
 
